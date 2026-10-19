@@ -1,7 +1,7 @@
 <?php
 
 // A valid, already-normalized registration (as returned by RegistrationRequest::validated()).
-// Also used by the local /dev/pdf preview route.
+// Also used by `php artisan registration:card` to produce a sample PDF.
 return [
     'firstNameHe' => 'ענת',
     'lastNameHe' => 'וולפמן',

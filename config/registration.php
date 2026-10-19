@@ -31,6 +31,9 @@ return [
     // How long the candidate's progress is kept in their browser.
     'storage_ttl_days' => 365,
 
+    // How the PDF card prints an optional field the candidate left empty.
+    'pdf_empty_label' => 'NULL',
+
     // Anti-flood: per-IP limit, and a window that blocks re-sending
     // the same candidate + branch + major.
     'rate_per_hour' => (int) env('REGISTRATION_RATE_PER_HOUR', 10),

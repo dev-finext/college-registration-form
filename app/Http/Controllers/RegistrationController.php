@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
 use App\Mail\RegistrationSubmitted;
-use App\Services\RegistrationPdf;
+use App\Services\Registration\RegistrationCard;
 use App\Support\ClientConfig;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class RegistrationController extends Controller
         return response()->json(['token' => $request->session()->token()]);
     }
 
-    public function store(RegistrationRequest $request, RegistrationPdf $pdf): JsonResponse
+    public function store(RegistrationRequest $request, RegistrationCard $card): JsonResponse
     {
         $branchName = config('registration.branches.'.$request->input('branch').'.name');
 
@@ -50,7 +50,8 @@ class RegistrationController extends Controller
         }
 
         try {
-            Mail::to($branch['emails'])->send(new RegistrationSubmitted($data, $pdf->render($data)));
+            $submittedAt = now();
+            Mail::to($branch['emails'])->send(new RegistrationSubmitted($data, $card->pdf($data, $submittedAt), $submittedAt));
         } catch (Throwable $e) {
             Cache::forget($lockKey);
             Log::error('Registration email failed', ['branch' => $data['branch'], 'error' => $e->getMessage()]);
