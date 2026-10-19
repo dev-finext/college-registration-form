@@ -1,0 +1,43 @@
+<?php
+
+// A valid, already-normalized registration (as returned by RegistrationRequest::validated()).
+// Also used by the local /dev/pdf preview route.
+return [
+    'firstNameHe' => 'ענת',
+    'lastNameHe' => 'וולפמן',
+    'firstNameEn' => 'Anat',
+    'lastNameEn' => 'Wolfman',
+    'idNumber' => '123456782',
+    'branch' => 'jerusalem',
+    'major' => 'תוכנה',
+    'startTerm' => 'סתיו',
+    'studyTrack' => 'ערב',
+    'certificateType' => 'בגרות מלאה',
+    'birthDate' => '1998-09-10',
+    'birthCountry' => 'תאילנד',
+    'aliyahDate' => '2001-09-01',
+    'gender' => 'נקבה',
+    'city' => 'ירושלים',
+    'street' => 'מסריק',
+    'houseNumber' => '10',
+    'zip' => '9458110',
+    'mobile' => '0505773045',
+    'phone2' => null,
+    'email' => 'anat@example.com',
+    'fatherName' => 'דוד',
+    'motherName' => 'רחל',
+    'serviceType' => 'צה"ל',
+    'personalNumber' => '7654321',
+    'enlistDate' => '2016-08-01',
+    'releaseDate' => '2018-08-01',
+    'infoSource' => 'גוגל',
+    'commitmentAccepted' => true,
+    'consentPlacement' => false,
+    'consentMessages' => true,
+    'waiverMath' => true,
+    'waiverEnglish' => true,
+    'waiverHebrew' => false,
+    'waiverAccepted' => true,
+    // Small hand-drawn style signature on white
+    'signature' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAACgCAIAAABbmSgaAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEyklEQVR4nO3dy3HcOBiFUdo1KTgI5+JwncsEMUH0LOSC9egHHyBxAZyz1UJctD7d+oslfbvdbgsAeb63fgAA7hNogFACDRBKoAFCCTRAKIEGCCXQAKEEGiCUQAOEEmiAUAINEEqgAUIJNEAogQYIJdAAoQQaIJRAA4QSaIBQAg0QSqABQgk0QCiBBggl0AChBBoglEADhBJogFACDRBKoAFCCTRAKIEGCCXQAKEEGiCUQAOEEmiAUAINEEqgAUIJNEAogQYIJdDU9+Pnrx8/f7V+Cujet9vt1voZGMenLv/37+9WTwIDEGjqeDSZNRp2E2gOudvltyiXL2k07PNP6wegV0/SDFRhQbPZ+jQb0XCEQLPB1zS/LK9Gw24CzWsHrxkaDfu4QfOMQzM0ZEFzX900G9Gwg0DzwXmTWaNhK4HmjwuuGRoNm7hB49AMoSzoqe14ba7Wd/QLAF4S6Bm1ncwaDSsJ9FxCrhkaDWu4Qc8iJM3Aehb04GK7bETDSwI9rNg0FxoNzwn0gPLTXGg0POEGPZTrX5uD4b39WDX5UbKgR9DRZP7KiCZTwj/YFOi+dZ3mQqPJEfXfNQW6V2OkudBo2nrU5aXpZ9INujODdRnayuxyYUF3Y/g0G9FcJrzLhUB3YPg0FxrNqXrpciHQ0SZ8bU6jqa67Lhdu0Inmmcxwnn67XFjQWaR5MaI5ZoAuFwKdQprf02i2GqnLhUA3psuPaDRrDNnlwg26GWmG3cbucmFBNyDNKxnRfDJJlwuBvtSEr80dpNEs83W5EOgrmMxHaPS0pu1y4QZ9LmmGrXS5sKDPIs0VGdEz0OWvBLoyXT6JRo9Kl58Q6Gqk+WwaPRJdXsMNugJphpV0eRML+hCvzV3MiO6ULu8j0HuYzA1pdEd0+SCB3kaaE2h0OF2uxQ16LWmG53S5Ogv6BV3OZETn0OXzCPRD0hxOo9vS5QsI9B3S3AuNvp4uX8kN+gOvzcFdutyEBb0sJnPPjOhT6XJbswdamgeg0dXpcoh5Ay3NI9HoKnQ5zXQ3aF2GT3Q51kQLWprHZkRvpcv5pgi0NE9Co9fQ5Y4MHmivzc1Gox/R5R6NeYM2meGNLndttAUtzRjRiy6PYpxASzPFtI3W5cF0H2hd5q6pGq3Lo+r4Bi3NTE6Xh9flgpZm1hh1ROvyPDoLtNfm2GSkRuvyhPoItMnMbr03Wpdnln6DlmbmpMssyQtamqmloxGty7wXF2hd5gzhjdZl7goKtDRzqsBG6zLPRdygpZmp6DIrNV7QXpvjSm1HtC6zVbNASzNNXN9oXWa3iED7mHKlaxqtyxzX+Abtk8pgdJmKgt7igMtUH9G6zBkEmklVabQucyqBZl67G63LXCPiPWjogi5zMQuaqa0Z0bpMKwLN7B41WpdpTqDhQ6N1mRxu0PCXPwtDFAsalsXfHiCSQMMfb43WZXIINECo760fAID7BBoglEADhBJogFACDRBKoAFCCTRAKIEGCCXQAKEEGiCUQAOEEmiAUAINEEqgAUIJNEAogQYIJdAAoQQaIJRAA4QSaIBQAg0QSqABQgk0QCiBBggl0AChBBoglEADhBJogFACDRBKoAFCCTRAKIEGCCXQAKEEGiCUQAOEEmiAUAINEOp/7ToEIHPcc9QAAAAASUVORK5CYII=',
+];

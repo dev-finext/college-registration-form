@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css?v=1792404148">
 </head>
 <body>
-
-<div class="demo-ribbon" id="demoRibbon">גרסת דמו לבדיקת ממשק בלבד · הנתונים לא נשלחים לשום מקום</div>
+  
+  <div class="demo-ribbon">גרסת דמו לבדיקת ממשק בלבד · הנתונים לא נשלחים לשום מקום</div>
 
 <header class="site-header">
   <div class="wrap header-inner">
@@ -26,7 +26,7 @@
 
 <main class="wrap">
 
-  <!-- מסך פתיחה / חזרה לטופס -->
+  
   <section class="card intro" id="introScreen">
     <h2>ברוכים הבאים לרישום ללימודי הנדסאים</h2>
     <p>מילוי הטופס לוקח כ-10 דקות. ההתקדמות נשמרת אוטומטית <strong>במכשיר ובדפדפן הזה</strong> עד 12 חודשים, אז אפשר לעצור ולחזור בכל שלב.</p>
@@ -50,7 +50,7 @@
     </div>
   </section>
 
-  <!-- אשף הטופס -->
+  
   <div id="wizard" hidden>
     <nav class="stepper" aria-label="שלבי הטופס">
       <ol id="stepperList"></ol>
@@ -61,313 +61,328 @@
     </nav>
 
     <form id="regForm" novalidate autocomplete="on">
-      <!-- honeypot נגד בוטים -->
+      
       <div class="hp" aria-hidden="true">
         <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       </div>
 
-      <!-- שלב 1: פרטי הסטודנט/ית -->
       <section class="step card" data-title="פרטי הסטודנט/ית">
-        <h2 class="block-title">פרטי הסטודנט/ית</h2>
+  <h2 class="block-title">פרטי הסטודנט/ית</h2>
 
-        <div class="grid">
-          <div class="field">
-            <label for="firstNameHe">שם פרטי (עברית) <span class="req">*</span></label>
-            <input id="firstNameHe" name="firstNameHe" required data-rule="he" autocomplete="given-name">
-          </div>
-          <div class="field">
-            <label for="lastNameHe">שם משפחה (עברית) <span class="req">*</span></label>
-            <input id="lastNameHe" name="lastNameHe" required data-rule="he" autocomplete="family-name">
-          </div>
-          <div class="field">
-            <label for="firstNameEn">First name <span class="req">*</span></label>
-            <input id="firstNameEn" name="firstNameEn" required data-rule="en" dir="ltr">
-          </div>
-          <div class="field">
-            <label for="lastNameEn">Last name <span class="req">*</span></label>
-            <input id="lastNameEn" name="lastNameEn" required data-rule="en" dir="ltr">
-          </div>
-          <div class="field">
-            <label for="idNumber">מס' תעודת זהות <span class="req">*</span></label>
-            <input id="idNumber" name="idNumber" required data-rule="id" inputmode="numeric" maxlength="9" dir="ltr">
-            <small class="hint">9 ספרות כולל ספרת ביקורת</small>
-          </div>
-        </div>
+  <div class="grid">
+    <div class="field">
+      <label for="firstNameHe">שם פרטי (עברית) <span class="req">*</span></label>
+      <input id="firstNameHe" name="firstNameHe" required data-rule="he" maxlength="50" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <label for="lastNameHe">שם משפחה (עברית) <span class="req">*</span></label>
+      <input id="lastNameHe" name="lastNameHe" required data-rule="he" maxlength="50" autocomplete="family-name">
+    </div>
+    <div class="field">
+      <label for="firstNameEn">First name <span class="req">*</span></label>
+      <input id="firstNameEn" name="firstNameEn" required data-rule="en" maxlength="50" dir="ltr">
+    </div>
+    <div class="field">
+      <label for="lastNameEn">Last name <span class="req">*</span></label>
+      <input id="lastNameEn" name="lastNameEn" required data-rule="en" maxlength="50" dir="ltr">
+    </div>
+    <div class="field">
+      <label for="idNumber">מס' תעודת זהות <span class="req">*</span></label>
+      <input id="idNumber" name="idNumber" required data-rule="id" inputmode="numeric" maxlength="9" dir="ltr">
+      <small class="hint">9 ספרות כולל ספרת ביקורת</small>
+    </div>
+  </div>
 
-        <div class="grid">
-          <div class="field">
-            <label for="branch">שלוחה <span class="req">*</span></label>
-            <select id="branch" name="branch" required><option value="">בחירת שלוחה</option></select>
-          </div>
-          <div class="field">
-            <label for="major">מגמה <span class="req">*</span></label>
-            <select id="major" name="major" required disabled><option value="">יש לבחור שלוחה קודם</option></select>
-          </div>
-        </div>
+  <div class="grid">
+    <div class="field">
+      <label for="branch">שלוחה <span class="req">*</span></label>
+      <select id="branch" name="branch" required><option value="">בחירת שלוחה</option></select>
+    </div>
+    <div class="field">
+      <label for="major">מגמה <span class="req">*</span></label>
+      <select id="major" name="major" required disabled><option value="">יש לבחור שלוחה קודם</option></select>
+    </div>
+  </div>
 
-        <div class="grid">
-          <fieldset class="field">
-            <legend>מועד פתיחת לימודים <span class="req">*</span></legend>
-            <div class="choice-row">
-              <label class="choice-card"><input type="radio" name="startTerm" value="סתיו" required><span>סתיו</span></label>
-              <label class="choice-card"><input type="radio" name="startTerm" value="אביב"><span>אביב</span></label>
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>מסלול לימודים <span class="req">*</span></legend>
-            <div class="choice-row" id="studyTrackOptions"></div>
-          </fieldset>
-        </div>
-      </section>
-
-      <!-- שלב 2: טופס בקשת הרשמה - פרטים אישיים וכתובת -->
+  <div class="grid">
+    <fieldset class="field">
+      <legend>מועד פתיחת לימודים <span class="req">*</span></legend>
+      <div class="choice-row">
+                  <label class="choice-card"><input type="radio" name="startTerm" value="סתיו" required><span>סתיו</span></label>
+                  <label class="choice-card"><input type="radio" name="startTerm" value="אביב" ><span>אביב</span></label>
+              </div>
+    </fieldset>
+    <fieldset class="field">
+      <legend>מסלול לימודים <span class="req">*</span></legend>
+      <div class="choice-row">
+                  <label class="choice-card"><input type="radio" name="studyTrack" value="בוקר" required><span>בוקר</span></label>
+                  <label class="choice-card"><input type="radio" name="studyTrack" value="ערב" ><span>ערב</span></label>
+              </div>
+    </fieldset>
+  </div>
+</section>
       <section class="step card" data-title="פרטים אישיים">
-        <h2 class="block-title">טופס בקשת הרשמה</h2>
+  <h2 class="block-title">טופס בקשת הרשמה</h2>
 
-        <h3 class="sub-title">המסלול</h3>
-        <div class="grid">
-          <div class="field">
-            <label>תאריך הרשמה</label>
-            <div class="readonly" data-fill="today"></div>
-          </div>
-          <div class="field">
-            <label for="certificateType">סוג תעודה <span class="req">*</span></label>
-            <select id="certificateType" name="certificateType" required><option value="">בחירה</option></select>
-          </div>
-        </div>
+  <h3 class="sub-title">המסלול</h3>
+  <div class="grid">
+    <div class="field">
+      <label>תאריך הרשמה</label>
+      <div class="readonly" data-fill="today"></div>
+    </div>
+    <div class="field">
+      <label for="certificateType">סוג תעודה <span class="req">*</span></label>
+      <select id="certificateType" name="certificateType" required>
+        <option value="">בחירה</option>
+                  <option value="בגרות מלאה">בגרות מלאה</option>
+                  <option value="בגרות חלקית">בגרות חלקית</option>
+                  <option value="12 שנות לימוד">12 שנות לימוד</option>
+                  <option value="תעודת טכנאי">תעודת טכנאי</option>
+                  <option value="אחר">אחר</option>
+              </select>
+    </div>
+  </div>
 
-        <h3 class="sub-title">פרטים אישיים</h3>
-        <div class="autofill-note">
-          <span>שם: <strong data-fill="fullNameHe"></strong></span>
-          <span>ת"ז: <strong data-fill="idNumber"></strong></span>
-          <span class="muted">(מולא אוטומטית מהשלב הקודם)</span>
-        </div>
-        <div class="grid">
-          <div class="field">
-            <label for="birthDate">תאריך לידה <span class="req">*</span></label>
-            <input type="date" id="birthDate" name="birthDate" required data-max="today">
-          </div>
-          <div class="field">
-            <label for="birthCountry">ארץ לידה <span class="req">*</span></label>
-            <input id="birthCountry" name="birthCountry" required list="countries" value="ישראל">
-            <datalist id="countries">
-              <option value="ישראל"><option value="רוסיה"><option value="אוקראינה"><option value="אתיופיה"><option value="ארצות הברית"><option value="צרפת"><option value="ארגנטינה"><option value="בלארוס"><option value="בריטניה">
-            </datalist>
-          </div>
-          <div class="field" data-show-if="birthCountry!=ישראל">
-            <label for="aliyahDate">תאריך עלייה <span class="req">*</span></label>
-            <input type="date" id="aliyahDate" name="aliyahDate" required data-max="today">
-          </div>
-          <fieldset class="field">
-            <legend>מגדר <span class="req">*</span></legend>
-            <div class="choice-row">
-              <label class="choice-card"><input type="radio" name="gender" value="זכר" required><span>זכר</span></label>
-              <label class="choice-card"><input type="radio" name="gender" value="נקבה"><span>נקבה</span></label>
-              <label class="choice-card"><input type="radio" name="gender" value="אחר"><span>אחר</span></label>
-            </div>
-          </fieldset>
-        </div>
+  <h3 class="sub-title">פרטים אישיים</h3>
+  <div class="autofill-note">
+    <span>שם: <strong data-fill="fullNameHe"></strong></span>
+    <span>ת"ז: <strong data-fill="idNumber"></strong></span>
+    <span class="muted">(מולא אוטומטית מהשלב הקודם)</span>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label for="birthDate">תאריך לידה <span class="req">*</span></label>
+      <input type="date" id="birthDate" name="birthDate" required data-max="today">
+    </div>
+    <div class="field">
+      <label for="birthCountry">ארץ לידה <span class="req">*</span></label>
+      <input id="birthCountry" name="birthCountry" required list="countries" value="ישראל" maxlength="60">
+      <datalist id="countries">
+                  <option value="ישראל">
+                  <option value="רוסיה">
+                  <option value="אוקראינה">
+                  <option value="אתיופיה">
+                  <option value="ארצות הברית">
+                  <option value="צרפת">
+                  <option value="ארגנטינה">
+                  <option value="בלארוס">
+                  <option value="בריטניה">
+              </datalist>
+    </div>
+    <div class="field" data-show-if="birthCountry!=ישראל">
+      <label for="aliyahDate">תאריך עלייה <span class="req">*</span></label>
+      <input type="date" id="aliyahDate" name="aliyahDate" required data-max="today">
+    </div>
+    <fieldset class="field">
+      <legend>מגדר <span class="req">*</span></legend>
+      <div class="choice-row">
+                  <label class="choice-card"><input type="radio" name="gender" value="זכר" required><span>זכר</span></label>
+                  <label class="choice-card"><input type="radio" name="gender" value="נקבה" ><span>נקבה</span></label>
+                  <label class="choice-card"><input type="radio" name="gender" value="אחר" ><span>אחר</span></label>
+              </div>
+    </fieldset>
+  </div>
 
-        <h3 class="sub-title">כתובת מגורים</h3>
-        <div class="grid">
-          <div class="field">
-            <label for="city">ישוב <span class="req">*</span></label>
-            <input id="city" name="city" required autocomplete="address-level2">
-          </div>
-          <div class="field">
-            <label for="street">רחוב / ת.ד. <span class="req">*</span></label>
-            <input id="street" name="street" required autocomplete="address-line1">
-          </div>
-          <div class="field">
-            <label for="houseNumber">מספר</label>
-            <input id="houseNumber" name="houseNumber" inputmode="numeric">
-          </div>
-          <div class="field">
-            <label for="zip">מיקוד</label>
-            <input id="zip" name="zip" data-rule="zip" inputmode="numeric" maxlength="7" dir="ltr" autocomplete="postal-code">
-          </div>
-        </div>
-      </section>
-
-      <!-- שלב 3: דרכי התקשרות, משפחה, שירות -->
+  <h3 class="sub-title">כתובת מגורים</h3>
+  <div class="grid">
+    <div class="field">
+      <label for="city">ישוב <span class="req">*</span></label>
+      <input id="city" name="city" required maxlength="80" autocomplete="address-level2">
+    </div>
+    <div class="field">
+      <label for="street">רחוב / ת.ד. <span class="req">*</span></label>
+      <input id="street" name="street" required maxlength="80" autocomplete="address-line1">
+    </div>
+    <div class="field">
+      <label for="houseNumber">מספר</label>
+      <input id="houseNumber" name="houseNumber" maxlength="10">
+    </div>
+    <div class="field">
+      <label for="zip">מיקוד</label>
+      <input id="zip" name="zip" data-rule="zip" inputmode="numeric" maxlength="7" dir="ltr" autocomplete="postal-code">
+    </div>
+  </div>
+</section>
       <section class="step card" data-title="קשר ושירות">
-        <h2 class="block-title">טופס בקשת הרשמה</h2>
+  <h2 class="block-title">טופס בקשת הרשמה</h2>
 
-        <h3 class="sub-title">דרכי התקשרות</h3>
-        <div class="grid">
-          <div class="field">
-            <label for="mobile">טלפון נייד <span class="req">*</span></label>
-            <input type="tel" id="mobile" name="mobile" required data-rule="mobile" dir="ltr" autocomplete="tel">
-          </div>
-          <div class="field">
-            <label for="phone2">טלפון נוסף</label>
-            <input type="tel" id="phone2" name="phone2" data-rule="phone" dir="ltr">
-          </div>
-          <div class="field field-wide">
-            <label for="email">דוא"ל <span class="req">*</span></label>
-            <input type="email" id="email" name="email" required data-rule="email" dir="ltr" autocomplete="email">
-          </div>
-        </div>
+  <h3 class="sub-title">דרכי התקשרות</h3>
+  <div class="grid">
+    <div class="field">
+      <label for="mobile">טלפון נייד <span class="req">*</span></label>
+      <input type="tel" id="mobile" name="mobile" required data-rule="mobile" dir="ltr" autocomplete="tel">
+    </div>
+    <div class="field">
+      <label for="phone2">טלפון נוסף</label>
+      <input type="tel" id="phone2" name="phone2" data-rule="phone" dir="ltr">
+    </div>
+    <div class="field field-wide">
+      <label for="email">דוא"ל <span class="req">*</span></label>
+      <input type="email" id="email" name="email" required data-rule="email" maxlength="120" dir="ltr" autocomplete="email">
+    </div>
+  </div>
 
-        <h3 class="sub-title">משפחה</h3>
-        <div class="grid">
-          <div class="field">
-            <label for="fatherName">שם האב</label>
-            <input id="fatherName" name="fatherName">
-          </div>
-          <div class="field">
-            <label for="motherName">שם האם</label>
-            <input id="motherName" name="motherName">
-          </div>
-        </div>
+  <h3 class="sub-title">משפחה</h3>
+  <div class="grid">
+    <div class="field">
+      <label for="fatherName">שם האב</label>
+      <input id="fatherName" name="fatherName" maxlength="50">
+    </div>
+    <div class="field">
+      <label for="motherName">שם האם</label>
+      <input id="motherName" name="motherName" maxlength="50">
+    </div>
+  </div>
 
-        <h3 class="sub-title">שירות צבאי / לאומי</h3>
-        <fieldset class="field">
-          <legend>שירות בצה"ל / שירות לאומי <span class="req">*</span></legend>
-          <div class="choice-row">
-            <label class="choice-card"><input type="radio" name="serviceType" value="צה&quot;ל" required><span>צה"ל</span></label>
-            <label class="choice-card"><input type="radio" name="serviceType" value="שירות לאומי"><span>שירות לאומי</span></label>
-            <label class="choice-card"><input type="radio" name="serviceType" value="לא"><span>לא</span></label>
+  <h3 class="sub-title">שירות צבאי / לאומי</h3>
+  <fieldset class="field">
+    <legend>שירות בצה"ל / שירות לאומי <span class="req">*</span></legend>
+    <div class="choice-row">
+              <label class="choice-card"><input type="radio" name="serviceType" value="צה&quot;ל" required><span>צה&quot;ל</span></label>
+              <label class="choice-card"><input type="radio" name="serviceType" value="שירות לאומי" ><span>שירות לאומי</span></label>
+              <label class="choice-card"><input type="radio" name="serviceType" value="לא" ><span>לא</span></label>
           </div>
-        </fieldset>
-        <div class="grid" data-show-if="serviceType!=לא" data-show-requires="serviceType">
-          <div class="field" data-show-if="serviceType=צה&quot;ל">
-            <label for="personalNumber">מס' אישי</label>
-            <input id="personalNumber" name="personalNumber" inputmode="numeric" dir="ltr">
-          </div>
-          <div class="field">
-            <label for="enlistDate">תאריך גיוס</label>
-            <input type="date" id="enlistDate" name="enlistDate" data-max="today">
-          </div>
-          <div class="field">
-            <label for="releaseDate">תאריך שחרור</label>
-            <input type="date" id="releaseDate" name="releaseDate">
-          </div>
-        </div>
+  </fieldset>
+  <div class="grid" data-show-if="serviceType!=לא">
+    <div class="field" data-show-if="serviceType=צה&quot;ל">
+      <label for="personalNumber">מס' אישי</label>
+      <input id="personalNumber" name="personalNumber" inputmode="numeric" maxlength="9" dir="ltr">
+    </div>
+    <div class="field">
+      <label for="enlistDate">תאריך גיוס</label>
+      <input type="date" id="enlistDate" name="enlistDate" data-max="today">
+    </div>
+    <div class="field">
+      <label for="releaseDate">תאריך שחרור</label>
+      <input type="date" id="releaseDate" name="releaseDate">
+    </div>
+  </div>
 
-        <h3 class="sub-title">מקור מידע על המכללה</h3>
-        <div class="field">
-          <label for="infoSource">איך שמעת עלינו?</label>
-          <select id="infoSource" name="infoSource"><option value="">בחירה</option></select>
-        </div>
-      </section>
-
-      <!-- שלב 4: כתב התחייבות -->
+  <h3 class="sub-title">מקור מידע על המכללה</h3>
+  <div class="field">
+    <label for="infoSource">איך שמעת עלינו?</label>
+    <select id="infoSource" name="infoSource">
+      <option value="">בחירה</option>
+              <option value="אתר המכללה">אתר המכללה</option>
+              <option value="גוגל">גוגל</option>
+              <option value="פייסבוק / אינסטגרם">פייסבוק / אינסטגרם</option>
+              <option value="חבר/ה או בן/בת משפחה">חבר/ה או בן/בת משפחה</option>
+              <option value="יום פתוח">יום פתוח</option>
+              <option value="אחר">אחר</option>
+          </select>
+  </div>
+</section>
       <section class="step card" data-title="כתב התחייבות">
-        <h2 class="block-title">כתב התחייבות והצהרת הסטודנט</h2>
+  <h2 class="block-title">כתב התחייבות והצהרת הסטודנט</h2>
 
-        <div class="fee-box">
-          <div class="fee-label">שכר לימוד</div>
-          <div class="fee-value">שכר הלימוד במלואו (שייקבע בנהלי מה"ט) + 200 ₪ דמי פתיחת תיק ורישום</div>
-        </div>
+  <div class="fee-box">
+    <div class="fee-label">שכר לימוד</div>
+    <div class="fee-value">שכר הלימוד במלואו (שייקבע בנהלי מה&quot;ט) + 200 ₪ דמי פתיחת תיק ורישום</div>
+  </div>
 
-        <p class="legal-lead">אני החתום/ה מטה, מאשר/ת כי הפרטים שמסרתי לעיל נכונים, ומתחייב/ת — לאחר קבלתי ללימודים — למלא אחר נהלי המכללה למינהל, לרבות המצאת כל התעודות הנדרשות ותשלום שכר הלימוד במלואו כמפורט לעיל.</p>
+  <p class="legal-lead">אני החתום/ה מטה, מאשר/ת כי הפרטים שמסרתי לעיל נכונים, ומתחייב/ת — לאחר קבלתי ללימודים — למלא אחר נהלי המכללה למינהל, לרבות המצאת כל התעודות הנדרשות ותשלום שכר הלימוד במלואו כמפורט לעיל.</p>
 
-        <h3 class="sub-title">עיקרי ההתחייבות (סעיפים 1–25)</h3>
-        <div class="legal-scroll" tabindex="0">
-          <ol class="clauses">
-            <li>שכר הלימוד יוסדר עד עשרה ימי עסקים לפני תחילת הלימודים; אי הסדרתו עלול למנוע השתתפות בלימודים ו/או קבלת תעודה.</li>
-            <li>ביטול השתתפות בלימודים ייכנס לתוקף רק מיום קבלת הודעה בכתב על גבי טופס הפסקת לימודים במזכירות המכללה.</li>
-            <li>המכללה רשאית, לפי שיקול דעתה, שלא לפתוח מגמה — ובמקרה זה יוחזרו כל התשלומים ששולמו, כולל דמי פתיחת תיק.</li>
-            <li>שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם; משיכת שק לפני מועד הפירעון תחייב בעמלות הבנק והמכללה.</li>
-            <li>שקים שיחזרו כבלתי נפרעים יחייבו בתשלום עמלת בנק ועמלת מכללה.</li>
-            <li>חיוב סטודנט שהפסיק לימודיו יבוצע לפי טבלת החיוב המדורגת (ראו טבלה) ולפי נוהלי מה"ט.</li>
-            <li>דמי פתיחת תיק ורישום אינם ניתנים להחזר, אלא אם המכללה עצמה מבטלת את הלימודים.</li>
-            <li>הרישום הוא כמועמד/ת עד הצגת תעודת השכלה מתאימה לדרישות הקבלה של מה"ט.</li>
-            <li>סטודנט שהתקבל שלא מן המניין ישלים את התחייבויותיו עד תום שנת הלימודים הראשונה.</li>
-            <li>נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות או לקבל דיפלומה.</li>
-            <li>יש לעמוד בכל המטלות שנקבעו על ידי המרצה, לרבות ציון עובר בכל הבחינות.</li>
-            <li>לא תהיה כל תביעה כלפי המכללה בשל אי הכללה ברשימת נבחנים או אי קבלת תעודת גמר בשל אי עמידה בתנאי מה"ט.</li>
-            <li>לפי נוהל "התיישנות" של מה"ט, יש להשלים את כל לימודי המסלול, כולל פרויקט גמר, תוך 7 שנים ממועד תחילת הלימודים.</li>
-            <li>סטודנטים הזקוקים להתאמות בבחינה (לקויות למידה, קשב וריכוז, מוגבלות פיזית/רפואית) יפנו למרכז התמיכה מיד עם הקבלה ולא יאוחר מחודש מתחילת הסמסטר.</li>
-            <li>העתקי התעודות שנמסרו וימסרו יישארו בתיק האישי במכללה.</li>
-            <li>הפרטים בטופס זה יוזנו וינוהלו במחשבי המכללה למטרות ניהול.</li>
-            <li>חלק מהנתונים עשויים להיות מועברים להנהלת המכללה, מוסדותיה ולרשויות הבוחנות במסגרת ניהול מערכות כספיות ומידע בלבד.</li>
-            <li>באחריות הסטודנט למסור ולעדכן טלפון נייד ודוא"ל עדכניים; אי מסירתם/עדכונם משמעו ויתור על טענה בדבר אי קבלת הודעות.</li>
-            <li>בהתאם לתקנות הביטוח הלאומי, יועברו פרטים אישיים למוסד לביטוח לאומי לשם קביעת התעריף המוזל לסטודנט.</li>
-            <li>חתימה על כתב התחייבות זה מבטלת כל הבנה או הסכמה קודמת בעניין.</li>
-            <li>סמכות השיפוט הייחודית בכל עניין הקשור להסכם זה נתונה לבתי המשפט בתל אביב ובירושלים.</li>
-            <li>המכללה רשאית לצלם באקראי תלמידים במהלך הקורס לשם פרסום; ניתן לפנות ולבקש הסרת תמונה.</li>
-            <li>ציונים יועברו למה"ט לפי דרישתו, לבחינת עמידה בתנאי הקבלה.</li>
-            <li>הנדסאי מכשור רפואי: תיאום ההתנסות המעשית הוא באחריות המכללה בשנה השלישית בלבד; לאחריה — באחריות הסטודנט.</li>
-            <li>הנדסאי מכשור רפואי: יש לקבל את החיסונים הנדרשים לפי נהלי בתי החולים כתנאי לתחילת ההתנסות המעשית.</li>
+  <h3 class="sub-title">עיקרי ההתחייבות (סעיפים 1–25)</h3>
+  <div class="legal-scroll" tabindex="0">
+    <ol class="clauses">
+              <li>שכר הלימוד יוסדר עד עשרה ימי עסקים לפני תחילת הלימודים; אי הסדרתו עלול למנוע השתתפות בלימודים ו/או קבלת תעודה.</li>
+              <li>ביטול השתתפות בלימודים ייכנס לתוקף רק מיום קבלת הודעה בכתב על גבי טופס הפסקת לימודים במזכירות המכללה.</li>
+              <li>המכללה רשאית, לפי שיקול דעתה, שלא לפתוח מגמה — ובמקרה זה יוחזרו כל התשלומים ששולמו, כולל דמי פתיחת תיק.</li>
+              <li>שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם; משיכת שק לפני מועד הפירעון תחייב בעמלות הבנק והמכללה.</li>
+              <li>שקים שיחזרו כבלתי נפרעים יחייבו בתשלום עמלת בנק ועמלת מכללה.</li>
+              <li>חיוב סטודנט שהפסיק לימודיו יבוצע לפי טבלת החיוב המדורגת (ראו טבלה) ולפי נוהלי מה&quot;ט.</li>
+              <li>דמי פתיחת תיק ורישום אינם ניתנים להחזר, אלא אם המכללה עצמה מבטלת את הלימודים.</li>
+              <li>הרישום הוא כמועמד/ת עד הצגת תעודת השכלה מתאימה לדרישות הקבלה של מה&quot;ט.</li>
+              <li>סטודנט שהתקבל שלא מן המניין ישלים את התחייבויותיו עד תום שנת הלימודים הראשונה.</li>
+              <li>נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות או לקבל דיפלומה.</li>
+              <li>יש לעמוד בכל המטלות שנקבעו על ידי המרצה, לרבות ציון עובר בכל הבחינות.</li>
+              <li>לא תהיה כל תביעה כלפי המכללה בשל אי הכללה ברשימת נבחנים או אי קבלת תעודת גמר בשל אי עמידה בתנאי מה&quot;ט.</li>
+              <li>לפי נוהל &quot;התיישנות&quot; של מה&quot;ט, יש להשלים את כל לימודי המסלול, כולל פרויקט גמר, תוך 7 שנים ממועד תחילת הלימודים.</li>
+              <li>סטודנטים הזקוקים להתאמות בבחינה (לקויות למידה, קשב וריכוז, מוגבלות פיזית/רפואית) יפנו למרכז התמיכה מיד עם הקבלה ולא יאוחר מחודש מתחילת הסמסטר.</li>
+              <li>העתקי התעודות שנמסרו וימסרו יישארו בתיק האישי במכללה.</li>
+              <li>הפרטים בטופס זה יוזנו וינוהלו במחשבי המכללה למטרות ניהול.</li>
+              <li>חלק מהנתונים עשויים להיות מועברים להנהלת המכללה, מוסדותיה ולרשויות הבוחנות במסגרת ניהול מערכות כספיות ומידע בלבד.</li>
+              <li>באחריות הסטודנט למסור ולעדכן טלפון נייד ודוא&quot;ל עדכניים; אי מסירתם/עדכונם משמעו ויתור על טענה בדבר אי קבלת הודעות.</li>
+              <li>בהתאם לתקנות הביטוח הלאומי, יועברו פרטים אישיים למוסד לביטוח לאומי לשם קביעת התעריף המוזל לסטודנט.</li>
+              <li>חתימה על כתב התחייבות זה מבטלת כל הבנה או הסכמה קודמת בעניין.</li>
+              <li>סמכות השיפוט הייחודית בכל עניין הקשור להסכם זה נתונה לבתי המשפט בתל אביב ובירושלים.</li>
+              <li>המכללה רשאית לצלם באקראי תלמידים במהלך הקורס לשם פרסום; ניתן לפנות ולבקש הסרת תמונה.</li>
+              <li>ציונים יועברו למה&quot;ט לפי דרישתו, לבחינת עמידה בתנאי הקבלה.</li>
+              <li>הנדסאי מכשור רפואי: תיאום ההתנסות המעשית הוא באחריות המכללה בשנה השלישית בלבד; לאחריה — באחריות הסטודנט.</li>
+              <li>הנדסאי מכשור רפואי: יש לקבל את החיסונים הנדרשים לפי נהלי בתי החולים כתנאי לתחילת ההתנסות המעשית.</li>
           </ol>
 
-          <table class="charge-table">
-            <thead><tr><th>מועד ההודעה</th><th>היקף החיוב</th></tr></thead>
-            <tbody>
-              <tr><td>ממועד פתיחת תיק ורישום ועד יום תחילת הקורס</td><td>חיוב בסך 500 ₪</td></tr>
-              <tr><td>ממועד תחילת הלימודים ועד 90 יום</td><td>50% משכר הלימוד (דמי בחינות גמר והגנת פרויקט יוחזרו)</td></tr>
-              <tr><td>לאחר 90 יום מתחילת הלימודים</td><td>100% משכר הלימוד (דמי בחינות גמר והגנת פרויקט יוחזרו)</td></tr>
-            </tbody>
-          </table>
-        </div>
+    <table class="charge-table">
+      <thead><tr><th>מועד ההודעה</th><th>היקף החיוב</th></tr></thead>
+      <tbody>
+                  <tr><td>ממועד פתיחת תיק ורישום ועד יום תחילת הקורס</td><td>חיוב בסך 500 ₪</td></tr>
+                  <tr><td>ממועד תחילת הלימודים ועד 90 יום</td><td>50% משכר הלימוד (דמי בחינות גמר והגנת פרויקט יוחזרו)</td></tr>
+                  <tr><td>לאחר 90 יום מתחילת הלימודים</td><td>100% משכר הלימוד (דמי בחינות גמר והגנת פרויקט יוחזרו)</td></tr>
+              </tbody>
+    </table>
+  </div>
 
-        <div class="field">
-          <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>קראתי, הבנתי ואני מאשר/ת את כל תנאי כתב ההתחייבות וסעיפים 1–25 כמפורט לעיל. <span class="req">*</span></span></label>
-        </div>
-        <div class="sign-line">
-          <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-          <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-          <span>תאריך: <strong data-fill="today"></strong></span>
-        </div>
-      </section>
-
-      <!-- שלב 5: סעיפי רשות + ויתור על סודיות -->
+  <div class="field">
+    <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>קראתי, הבנתי ואני מאשר/ת את כל תנאי כתב ההתחייבות וסעיפים 1–25 כמפורט לעיל. <span class="req">*</span></span></label>
+  </div>
+  <div class="sign-line">
+    <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
+    <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
+    <span>תאריך: <strong data-fill="today"></strong></span>
+  </div>
+</section>
       <section class="step card" data-title="רשות וסודיות">
-        <h2 class="block-title">סעיפי רשות (אופציונלי)</h2>
+  <h2 class="block-title">סעיפי רשות (אופציונלי)</h2>
 
-        <div class="optional-clause">
-          <label class="check"><input type="checkbox" name="consentPlacement"><span>אני מאשר/ת למכללה להעביר את פרטיי האישיים (שם וטלפון) לחברות כוח אדם למטרות השמה, ללא כל תשלום מצדי.</span></label>
-          <div class="sign-line" data-show-if="consentPlacement=true">
-            <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-            <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-            <span>תאריך: <strong data-fill="today"></strong></span>
-          </div>
-        </div>
+  <div class="optional-clause">
+    <label class="check"><input type="checkbox" name="consentPlacement"><span>אני מאשר/ת למכללה להעביר את פרטיי האישיים (שם וטלפון) לחברות כוח אדם למטרות השמה, ללא כל תשלום מצדי.</span></label>
+    <div class="sign-line" data-show-if="consentPlacement=true">
+      <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
+      <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
+      <span>תאריך: <strong data-fill="today"></strong></span>
+    </div>
+  </div>
 
-        <div class="optional-clause">
-          <label class="check"><input type="checkbox" name="consentMessages"><span>אני מאשר/ת קבלת הודעות/SMS ודוא"ל בנושאים שונים וביניהם (אך לא רק): הודעות מידע ממה"ט (בדבר החזרים כספיים וכדומה) או הודעות מידע של המכללה (מידע, קורסים, מבצעים, ציונים ומועדי בחינות) לטלפון הנייד שלי.</span></label>
-          <div class="sign-line" data-show-if="consentMessages=true">
-            <span>טלפון נייד: <strong data-fill="mobile" dir="ltr"></strong></span>
-            <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-            <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-          </div>
-        </div>
+  <div class="optional-clause">
+    <label class="check"><input type="checkbox" name="consentMessages"><span>אני מאשר/ת קבלת הודעות/SMS ודוא&quot;ל בנושאים שונים וביניהם (אך לא רק): הודעות מידע ממה&quot;ט (בדבר החזרים כספיים וכדומה) או הודעות מידע של המכללה (מידע, קורסים, מבצעים, ציונים ומועדי בחינות) לטלפון הנייד שלי.</span></label>
+    <div class="sign-line" data-show-if="consentMessages=true">
+      <span>טלפון נייד: <strong data-fill="mobile" dir="ltr"></strong></span>
+      <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
+      <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
+    </div>
+  </div>
 
-        <h2 class="block-title">ויתור על סודיות</h2>
-        <p class="legal-lead">אני הח"מ נותן/ת בזאת רשות למשרד החינוך למסור למנהל/ת המחלקה הפדגוגית במה"ט את ציוני הבגרות שלי במקצועות הבאים, לצורך בדיקת עמידתי בתנאי הקבלה למסלול הכשרת הנדסאים שבפיקוח מה"ט:</p>
-        <div class="check-list">
-          <label class="check"><input type="checkbox" name="waiverMath"><span>מתמטיקה (3 יח' ומעלה)</span></label>
-          <label class="check"><input type="checkbox" name="waiverEnglish"><span>אנגלית (3 יח' ומעלה)</span></label>
-          <label class="check"><input type="checkbox" name="waiverHebrew"><span>עברית (2 יח' ומעלה)</span></label>
-        </div>
-        <div class="sign-line">
-          <span>ת"ז: <strong data-fill="idNumber"></strong></span>
-          <span>תאריך: <strong data-fill="today"></strong></span>
-        </div>
-        <div class="field">
-          <label class="check"><input type="checkbox" name="waiverAccepted"><span>אני מאשר/ת את ויתור הסודיות כמפורט לעיל.</span></label>
-        </div>
-        <div class="sign-line">
-          <span>שם הסטודנט: <strong data-fill="fullNameHe"></strong></span>
-          <span>שם המכללה: <strong>המכללה למינהל — בית הספר להנדסאים</strong></span>
-        </div>
-      </section>
-
-      <!-- שלב 6: סיכום וחתימה -->
+  <h2 class="block-title">ויתור על סודיות</h2>
+  <p class="legal-lead">אני הח&quot;מ נותן/ת בזאת רשות למשרד החינוך למסור למנהל/ת המחלקה הפדגוגית במה&quot;ט את ציוני הבגרות שלי במקצועות הבאים, לצורך בדיקת עמידתי בתנאי הקבלה למסלול הכשרת הנדסאים שבפיקוח מה&quot;ט:</p>
+  <div class="check-list">
+          <label class="check"><input type="checkbox" name="waiverMath"><span>מתמטיקה (3 יח&#039; ומעלה)</span></label>
+          <label class="check"><input type="checkbox" name="waiverEnglish"><span>אנגלית (3 יח&#039; ומעלה)</span></label>
+          <label class="check"><input type="checkbox" name="waiverHebrew"><span>עברית (2 יח&#039; ומעלה)</span></label>
+      </div>
+  <div class="sign-line">
+    <span>ת"ז: <strong data-fill="idNumber"></strong></span>
+    <span>תאריך: <strong data-fill="today"></strong></span>
+  </div>
+  <div class="field">
+    <label class="check"><input type="checkbox" name="waiverAccepted"><span>אני מאשר/ת את ויתור הסודיות כמפורט לעיל.</span></label>
+  </div>
+  <div class="sign-line">
+    <span>שם הסטודנט: <strong data-fill="fullNameHe"></strong></span>
+    <span>שם המכללה: <strong>המכללה למינהל — בית הספר להנדסאים</strong></span>
+  </div>
+</section>
       <section class="step card" data-title="חתימה ושליחה">
-        <h2 class="block-title">סיכום וחתימה דיגיטלית</h2>
-        <p class="muted">כדאי לעבור על הפרטים לפני החתימה. אפשר לחזור לכל שלב וחזרה לכאן.</p>
-        <div class="summary" id="summary"></div>
+  <h2 class="block-title">סיכום וחתימה דיגיטלית</h2>
+  <p class="muted">כדאי לעבור על הפרטים לפני החתימה. אפשר לחזור לכל שלב וחזרה לכאן.</p>
+  <div class="summary" id="summary"></div>
 
-        <h3 class="sub-title">חתימה דיגיטלית <span class="req">*</span></h3>
-        <div class="sig-wrap field" id="sigField">
-          <canvas id="sigCanvas" aria-label="משטח חתימה"></canvas>
-          <div class="sig-placeholder" id="sigPlaceholder">חתמו כאן באצבע או בעכבר</div>
-          <button type="button" class="link-btn sig-clear" id="sigClear">ניקוי חתימה</button>
-        </div>
-      </section>
+  <h3 class="sub-title">חתימה דיגיטלית <span class="req">*</span></h3>
+  <div class="sig-wrap field" id="sigField">
+    <canvas id="sigCanvas" aria-label="משטח חתימה"></canvas>
+    <div class="sig-placeholder" id="sigPlaceholder">חתמו כאן באצבע או בעכבר</div>
+    <button type="button" class="link-btn sig-clear" id="sigClear">ניקוי חתימה</button>
+  </div>
+</section>
 
       <div class="wizard-nav">
         <button type="button" class="btn btn-ghost" id="prevBtn">חזרה</button>
@@ -378,36 +393,36 @@
     </form>
   </div>
 
-  <!-- מסך סיום -->
+  
   <section class="card done" id="doneScreen" hidden>
     <div class="done-icon" aria-hidden="true">✓</div>
     <h2>טופס הרישום נשלח בהצלחה</h2>
     <p>תודה <strong id="doneName"></strong>! טופס הרישום הועבר לשלוחת <strong id="doneBranch"></strong>, ונציג/ה יחזרו אליך בהקדם.</p>
-    <div class="demo-mail" id="demoMail">
-      <div class="demo-mail-title">בפועל ישלח המייל הבא (בדמו לא נשלח דבר):</div>
-      <div><span class="muted">אל:</span> <span id="mailTo" dir="ltr"></span></div>
-      <div><span class="muted">נושא:</span> <span id="mailSubject"></span></div>
-      <div><span class="muted">קובץ מצורף:</span> <span id="mailAttachment" dir="ltr"></span></div>
-    </div>
-    <div class="done-actions">
-      <button type="button" class="btn btn-primary" id="previewDocBtn">תצוגה מקדימה של מסמך ה-PDF</button>
-      <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
+          <div class="demo-mail">
+        <div class="demo-mail-title">בפועל יישלח המייל הבא (בדמו לא נשלח דבר):</div>
+        <div><span class="muted">אל:</span> <span id="mailTo" dir="ltr"></span></div>
+        <div><span class="muted">נושא:</span> <span id="mailSubject"></span></div>
+        <div><span class="muted">קובץ מצורף:</span> <span id="mailAttachment" dir="ltr"></span></div>
+      </div>
+        <div class="done-actions">
+              <button type="button" class="btn btn-primary" id="previewDocBtn">תצוגה מקדימה של מסמך ה-PDF</button>
+            <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
     </div>
   </section>
 </main>
 
-<!-- תצוגה מקדימה של המסמך -->
-<div class="doc-overlay" id="docOverlay" hidden>
-  <div class="doc-toolbar">
-    <button type="button" class="btn btn-primary" id="printDocBtn">הדפסה / שמירה כ-PDF</button>
-    <button type="button" class="btn btn-ghost" id="closeDocBtn">סגירה</button>
+  
+  <div class="doc-overlay" id="docOverlay" hidden>
+    <div class="doc-toolbar">
+      <button type="button" class="btn btn-primary" id="printDocBtn">הדפסה / שמירה כ-PDF</button>
+      <button type="button" class="btn btn-ghost" id="closeDocBtn">סגירה</button>
+    </div>
+    <article class="doc" id="docBody"></article>
   </div>
-  <article class="doc" id="docBody"></article>
-</div>
 
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/app.js"></script>
+<script>window.APP_CONFIG = {"collegeName":"המכללה למינהל — בית הספר להנדסאים","formTitle":"טופס רישום להנדסאים","storageTtlDays":365,"demoMode":true,"submitUrl":null,"tokenUrl":null,"lockedBranch":null,"branches":[{"id":"rishon","name":"ראשון לציון","majors":["תוכנה","חשמל","אדריכלות ועיצוב פנים","מכשור רפואי","תעשייה וניהול"],"emails":["manager.rishon@example.org","office.rishon@example.org"]},{"id":"jerusalem","name":"ירושלים","majors":["תוכנה","חשמל","אדריכלות ועיצוב פנים"],"emails":["manager.jerusalem@example.org"]},{"id":"haifa","name":"חיפה","majors":["תוכנה","מכונות","תעשייה וניהול"],"emails":["manager.haifa@example.org","secretary.haifa@example.org"]},{"id":"beersheva","name":"באר שבע","majors":["תוכנה","חשמל","מכשור רפואי"],"emails":["manager.beersheva@example.org"]}],"csrfToken":null};</script>
+<script src="assets/js/app.js?v=1792405339"></script>
 </body>
 </html>
