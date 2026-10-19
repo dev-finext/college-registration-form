@@ -1,32 +1,57 @@
 # טופס רישום דיגיטלי להנדסאים — המכללה למינהל
 
-טופס רישום דיגיטלי רב-שלבי ללימודי הנדסאים. בסיום הרישום מופק PDF שנשלח בדוא"ל לשלוחה שנבחרה.
+טופס רישום דיגיטלי רב-שלבי ללימודי הנדסאים (Laravel 13 + Blade). בסיום הרישום השרת מפיק PDF בעברית ושולח אותו בדוא"ל לכל הכתובות של השלוחה שנבחרה.
 
-## מצב נוכחי
+- **דמו UI (GitHub Pages):** https://dev-finext.github.io/college-registration-form/ (שום נתון לא נשלח)
+- **קישור ייעודי לשלוחה:** `/{branch}` בשרת (למשל `/jerusalem`), `?branch=jerusalem` בדמו
 
-- `docs/` — דמו סטטי של הממשק (GitHub Pages). בלי שרת: שום נתון לא נשלח.
-- אפליקציית Laravel (Blade) תיבנה אחרי שהמכללה תאשר את הנתונים והשאלות הפתוחות, ותשתמש באותם CSS/JS.
+## עקרונות
 
-## מה יש בדמו
+- **אין DB.** ההתקדמות של המועמד נשמרת ב-`localStorage` בדפדפן שלו עד 12 חודשים. המסמך לא נשמר בשרת: המייל לשלוחה הוא העותק היחיד.
+- **מקור אמת אחד:** השלוחות, המגמות, המיילים, הרשימות והנוסח המשפטי נמצאים ב-[config/registration.php](config/registration.php), ומשמשים גם את הטופס וגם את ה-PDF.
+- כתובות המייל של השלוחות לא נשלחות לדפדפן.
 
-- 6 שלבים: פרטי הסטודנט/ית, פרטים אישיים, קשר ושירות, כתב התחייבות, רשות וסודיות, חתימה ושליחה
-- בדיקת ספרת ביקורת בתעודת זהות, בדיקות עקביות בין תאריכים ושדות חובה
-- שם ותעודת זהות מוזנים פעם אחת ומתמלאים אוטומטית בכל הטופס
-- שמירת ההתקדמות ב-`localStorage` ל-12 חודשים, עם חזרה לאותה נקודה
-- חתימה על המסך (canvas)
-- קישור ייעודי לכל שלוחה: `?branch=jerusalem` נועל את השלוחה
-- תצוגה מקדימה של מסמך ה-PDF ושל המייל שיישלח
+## מה יש
 
-## הרצה מקומית
+| נושא | מימוש |
+|---|---|
+| 6 שלבים, רספונסיבי, RTL | `resources/views/registration/**`, `public/assets/{css,js}` |
+| ספרת ביקורת בת"ז | בדפדפן ב-`app.js`, בשרת ב-`App\Rules\IsraeliId` |
+| עקביות תאריכים ושדות חובה | בדפדפן, ובשרת ב-`App\Http\Requests\RegistrationRequest` |
+| שם ות"ז פעם אחת, מילוי אוטומטי | `data-fill` ב-Blade |
+| חתימה על המסך | canvas → PNG על רקע לבן |
+| PDF בעברית | mPDF + `resources/views/pdf/registration.blade.php` |
+| מייל לשלוחה, כמה כתובות | `App\Mail\RegistrationSubmitted`, נושא: `טופס רישום הנדסאים - {שם} - {מגמה}`, Reply-To למועמד |
+| הגנה מפני הצפה | throttle לפי IP (3 בדקה, 10 בשעה), חסימת שליחה כפולה של אותו מועמד ל-10 דקות, honeypot, CSRF |
+
+## פיתוח מקומי
 
 ```bash
-php -S 127.0.0.1:8765 -t docs
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve
 ```
 
-## תוכנית לשלב Laravel
+- `MAIL_MAILER=log`: המייל (כולל ה-PDF) נכתב ל-`storage/logs/laravel.log`
+- `GET /dev/pdf`: תצוגת PDF עם נתוני דוגמה (רק ב-`APP_ENV=local`)
+- בדיקות: `php artisan test`
 
-- `config/branches.php`: שלוחות, מגמות וכתובות דוא"ל לכל שלוחה
-- `POST /register`: ולידציה בשרת (כולל ת"ז), throttle לפי IP, honeypot ו-CSRF
-- הפקת PDF בעברית (mPDF, RTL) ושליחה ב-Mailable לכל כתובות השלוחה
-- נושא המייל: `טופס רישום הנדסאים - {שם המועמד} - {מגמה}`
-- בלי DB: המסמך לא נשמר בשרת, המייל הוא העותק היחיד
+## עדכון הדמו ב-GitHub Pages
+
+הדמו נוצר מאותם קבצי Blade, כך שאינו מתרחק מהאפליקציה:
+
+```bash
+php artisan demo:export
+```
+
+הפקודה כותבת `docs/index.html` ומעתיקה את `public/assets` ל-`docs/assets`. אחרי commit ו-push, Pages מתעדכן.
+
+## העלאה לשרת (Cloudways)
+
+1. PHP 8.3+, document root ל-`public/`
+2. `composer install --no-dev --optimize-autoloader`
+3. הגדרות `.env`: `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, פרטי SMTP (`MAIL_*`), `MAIL_FROM_ADDRESS` מדומיין עם SPF/DKIM
+4. `php artisan key:generate && php artisan config:cache && php artisan route:cache && php artisan view:cache`
+5. הרשאות כתיבה ל-`storage/` ול-`bootstrap/cache/`
+6. SSL (Let's Encrypt ב-Cloudways)

@@ -12,8 +12,8 @@
   const steps = $$('.step', form);
   const state = { step: 0, maxStep: 0, data: {}, signature: null };
 
-  // שלוחה שמגיעה מהקישור (?branch=jerusalem) ננעלת - לינק ייעודי לכל שלוחה
-  const urlBranch = new URLSearchParams(location.search).get('branch');
+  // לינק ייעודי לשלוחה (/jerusalem בשרת, ?branch=jerusalem בדמו) נועל את השלוחה
+  const urlBranch = CFG.lockedBranch || new URLSearchParams(location.search).get('branch');
   const lockedBranch = CFG.branches.find(b => b.id === urlBranch) || null;
 
   /* ---------- עזרי תאריך ---------- */
@@ -153,11 +153,6 @@
   function populateStatic() {
     populateBranches();
     populateMajors();
-    fillSelect($('#certificateType'), CFG.certificateTypes);
-    fillSelect($('#infoSource'), CFG.infoSources);
-    $('#studyTrackOptions').innerHTML = CFG.studyTracks.map((t, i) =>
-      `<label class="choice-card"><input type="radio" name="studyTrack" value="${t}"${i === 0 ? ' required' : ''}><span>${t}</span></label>`
-    ).join('');
     $$('[data-max="today"]').forEach(el => { el.max = isoToday(); });
   }
 
@@ -344,6 +339,17 @@
       $('#sigPlaceholder').hidden = !!state.signature;
     }
 
+    // PNG על רקע לבן (שקיפות לא מוצגת נכון בחלק מקוראי ה-PDF), בגודל CSS ולא ברזולוציית המסך
+    function exportPng() {
+      const rect = canvas.getBoundingClientRect();
+      const out = document.createElement('canvas');
+      out.width = Math.round(rect.width); out.height = Math.round(rect.height);
+      const o = out.getContext('2d');
+      o.fillStyle = '#fff'; o.fillRect(0, 0, out.width, out.height);
+      o.drawImage(canvas, 0, 0, out.width, out.height);
+      return out.toDataURL('image/png');
+    }
+
     const pos = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
 
     canvas.addEventListener('pointerdown', e => {
@@ -360,7 +366,7 @@
     const end = () => {
       if (!drawing) return;
       drawing = false;
-      state.signature = canvas.toDataURL('image/png');
+      state.signature = exportPng();
       $('#sigField').classList.remove('has-error');
       clearError(canvas);
       if (dirty) scheduleSave();
@@ -420,6 +426,62 @@
   }
 
   /* ---------- שליחה ---------- */
+  function stepOf(name) {
+    const el = form.elements[name];
+    const node = el && (el.length && !el.tagName ? el[0] : el);
+    return node ? steps.findIndex(s => s.contains(node)) : -1;
+  }
+
+  // שגיאות ולידציה מהשרת: מסמנים את השדות וקופצים לשלב של השגיאה הראשונה
+  function showServerErrors(errors) {
+    let firstStep = steps.length;
+    for (const [name, msgs] of Object.entries(errors)) {
+      const idx = name === 'signature' ? steps.length - 1 : stepOf(name);
+      if (idx < 0) continue;
+      firstStep = Math.min(firstStep, idx);
+    }
+    if (firstStep < steps.length) showStep(firstStep);
+    for (const [name, msgs] of Object.entries(errors)) {
+      if (name === 'signature') { $('#sigField').classList.add('has-error'); setError($('#sigCanvas'), msgs[0]); continue; }
+      const el = form.elements[name];
+      if (!el) continue;
+      setError(el.length && !el.tagName ? el[0] : el, msgs[0]);
+    }
+  }
+
+  async function post(payload, retry = true) {
+    const res = await fetch(CFG.submitUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': CFG.csrfToken },
+      body: JSON.stringify(payload)
+    });
+    // דף שנשאר פתוח יותר מזמן הסשן: מביאים טוקן חדש ומנסים פעם נוספת
+    if (res.status === 419 && retry && CFG.tokenUrl) {
+      const t = await fetch(CFG.tokenUrl, { headers: { 'Accept': 'application/json' } }).then(r => r.json());
+      CFG.csrfToken = t.token;
+      return post(payload, false);
+    }
+    const body = await res.json().catch(() => ({}));
+    return { status: res.status, body };
+  }
+
+  function showDone(d, branchName) {
+    $('#doneName').textContent = d.firstNameHe;
+    $('#doneBranch').textContent = branchName || '';
+    if (CFG.demoMode) {
+      const branch = CFG.branches.find(b => b.id === d.branch);
+      $('#mailTo').textContent = (branch?.emails || []).join(', ');
+      $('#mailSubject').textContent = `טופס רישום הנדסאים - ${d.firstNameHe} ${d.lastNameHe} - ${d.major}`;
+      $('#mailAttachment').textContent = `registration-${d.idNumber.padStart(9, '0')}-${isoToday().replace(/-/g, '')}.pdf`;
+      $('#docBody').innerHTML = renderDoc(d);
+    }
+    clearTimeout(saveTimer);
+    clearStorage();
+    $('#wizard').hidden = true;
+    $('#doneScreen').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   let submitting = false;
   async function submit(e) {
     e.preventDefault();
@@ -428,31 +490,28 @@
       if (i !== state.step) { showStep(i, { scroll: false }); }
       if (!validateStep(i)) return;
     }
+    const d = readForm();
     if (form.elements.website.value) return; // honeypot
     submitting = true;
     const btn = $('#submitBtn');
     btn.disabled = true; btn.textContent = 'שולח…';
 
-    const d = readForm();
-    // בגרסת Laravel: POST /register עם CSRF, הפקת PDF בשרת ושליחה במייל לשלוחה
-    await new Promise(r => setTimeout(r, 1200));
-
-    const branch = CFG.branches.find(b => b.id === d.branch);
-    const fullName = `${d.firstNameHe} ${d.lastNameHe}`;
-    $('#doneName').textContent = d.firstNameHe;
-    $('#doneBranch').textContent = branch?.name || '';
-    $('#mailTo').textContent = (branch?.emails || []).join(', ');
-    $('#mailSubject').textContent = `טופס רישום הנדסאים - ${fullName} - ${d.major}`;
-    $('#mailAttachment').textContent = `registration-${d.idNumber}-${isoToday()}.pdf`;
-    $('#docBody').innerHTML = renderDoc(d);
-
-    clearTimeout(saveTimer);
-    clearStorage();
-    $('#wizard').hidden = true;
-    $('#doneScreen').hidden = false;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    submitting = false;
-    btn.disabled = false; btn.textContent = 'שליחת טופס הרישום';
+    try {
+      if (CFG.demoMode) {
+        await new Promise(r => setTimeout(r, 1200));
+        showDone(d, CFG.branches.find(b => b.id === d.branch)?.name);
+        return;
+      }
+      const { status, body } = await post({ ...d, website: form.elements.website.value, signature: state.signature });
+      if (status === 200 && body.ok) { showDone(d, body.branch); return; }
+      if (status === 422 && body.errors) { showServerErrors(body.errors); toast('יש לתקן את השדות המסומנים'); return; }
+      toast(body.message || 'אירעה תקלה בשליחה. הפרטים שמורים, אפשר לנסות שוב.');
+    } catch (err) {
+      toast('אין חיבור לשרת. הפרטים שמורים במכשיר, אפשר לנסות שוב.');
+    } finally {
+      submitting = false;
+      btn.disabled = false; btn.textContent = 'שליחת טופס הרישום';
+    }
   }
 
   /* ---------- הודעות ---------- */
@@ -485,7 +544,6 @@
   }
 
   function init() {
-    if (!CFG.demoMode) $('#demoRibbon').hidden = true;
     populateStatic();
 
     const saved = load();
@@ -550,9 +608,11 @@
       if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); $('#nextBtn').hidden || $('#nextBtn').click(); }
     });
 
-    $('#previewDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = false; document.body.style.overflow = 'hidden'; });
-    $('#closeDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = true; document.body.style.overflow = ''; });
-    $('#printDocBtn').addEventListener('click', () => window.print());
+    if (CFG.demoMode) {
+      $('#previewDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = false; document.body.style.overflow = 'hidden'; });
+      $('#closeDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = true; document.body.style.overflow = ''; });
+      $('#printDocBtn').addEventListener('click', () => window.print());
+    }
 
     applyConditions();
     applyFills();
