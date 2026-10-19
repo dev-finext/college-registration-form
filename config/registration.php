@@ -16,6 +16,15 @@ return [
     'college_name' => 'המכללה למינהל — בית הספר להנדסאים',
     'form_title' => 'טופס רישום להנדסאים',
 
+    // Branding and contact details, as published on college.org.il.
+    'brand' => [
+        'site_url' => 'https://college.org.il/',
+        'logo_url' => 'https://college.org.il/wp-content/uploads/2025/08/logo-college.png',
+        'phone' => '*5030',
+        'email' => 'minhalk@college.org.il',
+        'address' => 'החשמל 18, תל אביב',
+    ],
+
     // Public UI demo: the form never posts to the server.
     'demo' => (bool) env('REGISTRATION_DEMO', false),
 

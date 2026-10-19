@@ -7,8 +7,8 @@
   <title>טופס רישום להנדסאים | המכללה למינהל</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/app.css?v=1792404148">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css?v=1792406785">
 </head>
 <body>
   
@@ -16,13 +16,26 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <div>
-      <h1 class="form-title">טופס רישום להנדסאים</h1>
-      <div class="college-name">המכללה למינהל — בית הספר להנדסאים</div>
+    <a class="brand" href="https://college.org.il/" target="_blank" rel="noopener">
+      <img class="brand-logo" src="https://college.org.il/wp-content/uploads/2025/08/logo-college.png" alt="המכללה למינהל" width="198" height="52"
+           onerror="this.hidden = true; this.nextElementSibling.hidden = false;">
+      <span class="brand-fallback" hidden>המכללה למינהל</span>
+    </a>
+    <div class="header-actions">
+      <a class="header-phone" href="tel:*5030" aria-label="טלפון *5030">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        *5030
+      </a>
     </div>
-    <button type="button" class="link-btn" id="clearDataBtn" title="מחיקת הנתונים השמורים במכשיר זה">ניקוי נתונים מהמכשיר</button>
   </div>
 </header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <h1 class="form-title">טופס רישום להנדסאים</h1>
+    <div><span class="college-name">המכללה למינהל — בית הספר להנדסאים</span></div>
+  </div>
+</section>
 
 <main class="wrap">
 
@@ -420,9 +433,20 @@
     <article class="doc" id="docBody"></article>
   </div>
 
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-contact">
+      <a href="tel:*5030" dir="ltr">*5030</a>
+      <a href="mailto:minhalk@college.org.il">minhalk@college.org.il</a>
+      <span>החשמל 18, תל אביב</span>
+    </div>
+    <button type="button" class="link-btn footer-clear" id="clearDataBtn" title="מחיקת הנתונים השמורים במכשיר זה">ניקוי נתונים מהמכשיר</button>
+  </div>
+</footer>
+
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>window.APP_CONFIG = {"collegeName":"המכללה למינהל — בית הספר להנדסאים","formTitle":"טופס רישום להנדסאים","storageTtlDays":365,"demoMode":true,"submitUrl":null,"tokenUrl":null,"lockedBranch":null,"branches":[{"id":"rishon","name":"ראשון לציון","majors":["תוכנה","חשמל","אדריכלות ועיצוב פנים","מכשור רפואי","תעשייה וניהול"],"emails":["manager.rishon@example.org","office.rishon@example.org"]},{"id":"jerusalem","name":"ירושלים","majors":["תוכנה","חשמל","אדריכלות ועיצוב פנים"],"emails":["manager.jerusalem@example.org"]},{"id":"haifa","name":"חיפה","majors":["תוכנה","מכונות","תעשייה וניהול"],"emails":["manager.haifa@example.org","secretary.haifa@example.org"]},{"id":"beersheva","name":"באר שבע","majors":["תוכנה","חשמל","מכשור רפואי"],"emails":["manager.beersheva@example.org"]}],"csrfToken":null};</script>
-<script src="assets/js/app.js?v=1792405339"></script>
+<script src="assets/js/app.js?v=1792406729"></script>
 </body>
 </html>

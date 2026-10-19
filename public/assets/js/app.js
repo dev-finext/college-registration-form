@@ -88,6 +88,7 @@
   function writeForm(data) {
     for (const el of form.elements) {
       if (!el.name || !(el.name in data) || el.name === 'major') continue;
+      if (el.name === 'branch' && lockedBranch) continue; // קישור שלוחה גובר על שלוחה שנשמרה קודם
       if (el.type === 'checkbox') el.checked = !!data[el.name];
       else if (el.type === 'radio') el.checked = data[el.name] === el.value;
       else el.value = data[el.name];
