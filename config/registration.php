@@ -19,7 +19,8 @@ return [
     // Branding and contact details, as published on college.org.il.
     'brand' => [
         'site_url' => 'https://college.org.il/',
-        'logo_url' => 'https://college.org.il/wp-content/uploads/2025/08/logo-college.png',
+        // Copied from college.org.il (2026-10-19). The PDF and email use resources/images/college-logo.png.
+        'logo' => 'assets/img/college-logo.png',
         'phone' => '*5030',
         'email' => 'minhalk@college.org.il',
         'address' => 'החשמל 18, תל אביב',
@@ -32,7 +33,7 @@ return [
     'storage_ttl_days' => 365,
 
     // How the PDF card prints an optional field the candidate left empty.
-    'pdf_empty_label' => 'NULL',
+    'pdf_empty_label' => '—',
 
     // Anti-flood: per-IP limit, and a window that blocks re-sending
     // the same candidate + branch + major.

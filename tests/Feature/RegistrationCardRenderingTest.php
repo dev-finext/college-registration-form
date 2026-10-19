@@ -120,17 +120,10 @@ class RegistrationCardRenderingTest extends TestCase
         $this->assertStringStartsWith('%PDF', $pdf);
     }
 
-    public function test_without_a_logo_file_the_header_falls_back_to_the_college_name(): void
+    public function test_the_logo_is_on_the_card(): void
     {
-        $card = app(RegistrationCardData::class)->for($this->registration(), $this->at());
-
-        if ($card['logo'] !== null) {
-            $this->assertFileExists($card['logo']);
-            $this->markTestSkipped('A logo file is present.');
-        }
-
-        $html = app(RegistrationCard::class)->html($this->registration(), $this->at());
-        $this->assertStringContainsString('<span class="brand-text">המכללה למינהל</span>', $html);
+        $this->assertStringContainsString('college-logo.png', app(RegistrationCard::class)->html($this->registration(), $this->at()));
+        $this->assertFileExists(resource_path('images/college-logo.png'));
     }
 
     public function test_an_unusable_temporary_directory_is_reported_instead_of_failing_inside_mpdf(): void

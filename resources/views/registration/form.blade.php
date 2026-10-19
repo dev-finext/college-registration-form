@@ -11,9 +11,7 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="{{ $cfg['brand']['site_url'] }}" target="_blank" rel="noopener">
-      <img class="brand-logo" src="{{ $cfg['brand']['logo_url'] }}" alt="המכללה למינהל" width="198" height="52"
-           onerror="this.hidden = true; this.nextElementSibling.hidden = false;">
-      <span class="brand-fallback" hidden>המכללה למינהל</span>
+      <img class="brand-logo" src="{{ $assetBase }}{{ $cfg['brand']['logo'] }}" alt="המכללה למינהל" width="198" height="52">
     </a>
     <div class="header-actions">
       <a class="header-phone" href="tel:{{ $cfg['brand']['phone'] }}" aria-label="טלפון {{ $cfg['brand']['phone'] }}">
