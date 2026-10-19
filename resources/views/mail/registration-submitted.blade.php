@@ -5,7 +5,7 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" dir="rtl" style="max-width:600px; margin:0 auto; background:#ffffff; border-top:4px solid #1f8dbb;">
   <tr><td style="padding:24px 28px; text-align:right;">
     <h1 style="margin:0 0 4px; font-size:20px; color:#1f8dbb;">טופס רישום הנדסאים חדש</h1>
-    <p style="margin:0 0 18px; color:#6b7486; font-size:14px;">שלוחת {{ $branch['name'] }} · {{ now()->format('d/m/Y H:i') }}</p>
+    <p style="margin:0 0 18px; color:#6b7486; font-size:14px;">שלוחת {{ $branch['name'] }} · {{ $submittedAt->format('d.m.Y H:i') }} · אסמכתא {{ $reference }}</p>
 
     <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:15px; line-height:1.7;">
       <tr><td style="color:#6b7486; padding-left:16px;">שם:</td><td><strong>{{ $d['firstNameHe'] }} {{ $d['lastNameHe'] }}</strong> ({{ $d['firstNameEn'] }} {{ $d['lastNameEn'] }})</td></tr>

@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
-use App\Services\RegistrationPdf;
+use App\Services\Registration\RegistrationCard;
+use App\Services\Registration\RegistrationCardData;
+use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -14,7 +16,11 @@ class RegistrationSubmitted extends Mailable
 {
     use Queueable;
 
-    public function __construct(public array $data, public string $pdf) {}
+    public function __construct(
+        public array $data,
+        public string $pdf,
+        public CarbonInterface $submittedAt,
+    ) {}
 
     public function envelope(): Envelope
     {
@@ -31,13 +37,15 @@ class RegistrationSubmitted extends Mailable
         return new Content(view: 'mail.registration-submitted', with: [
             'd' => $this->data,
             'branch' => config('registration.branches.'.$this->data['branch']),
+            'reference' => RegistrationCardData::reference($this->data, $this->submittedAt),
+            'submittedAt' => $this->submittedAt,
         ]);
     }
 
     public function attachments(): array
     {
         return [
-            Attachment::fromData(fn () => $this->pdf, RegistrationPdf::filename($this->data))
+            Attachment::fromData(fn () => $this->pdf, RegistrationCard::filename($this->data, $this->submittedAt))
                 ->withMime('application/pdf'),
         ];
     }

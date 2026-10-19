@@ -20,7 +20,7 @@
 | עקביות תאריכים ושדות חובה | בדפדפן, ובשרת ב-`App\Http\Requests\RegistrationRequest` |
 | שם ות"ז פעם אחת, מילוי אוטומטי | `data-fill` ב-Blade |
 | חתימה על המסך | canvas → PNG על רקע לבן |
-| PDF בעברית | mPDF + `resources/views/pdf/registration.blade.php` |
+| PDF בעברית | אותו מבנה כמו במדנס: `RegistrationCardData` (שדות בשורות) → `registration/card.blade.php` (טבלאות) → `RegistrationCardRenderer` (mPDF) |
 | מייל לשלוחה, כמה כתובות | `App\Mail\RegistrationSubmitted`, נושא: `טופס רישום הנדסאים - {שם} - {מגמה}`, Reply-To למועמד |
 | הגנה מפני הצפה | throttle לפי IP (3 בדקה, 10 בשעה), חסימת שליחה כפולה של אותו מועמד ל-10 דקות, honeypot, CSRF |
 
@@ -34,7 +34,7 @@ php artisan serve
 ```
 
 - `MAIL_MAILER=log`: המייל (כולל ה-PDF) נכתב ל-`storage/logs/laravel.log`
-- `GET /dev/pdf`: תצוגת PDF עם נתוני דוגמה (רק ב-`APP_ENV=local`)
+- `php artisan registration:card --out=sample.pdf`: מפיק PDF לדוגמה מנתוני הבדיקה
 - בדיקות: `php artisan test`
 
 ## עדכון הדמו ב-GitHub Pages
