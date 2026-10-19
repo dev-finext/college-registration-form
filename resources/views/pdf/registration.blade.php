@@ -8,22 +8,22 @@
 <html dir="rtl" lang="he">
 <head>
 <style>
-    body { font-family: dejavusans; font-size: 9.5pt; color: #1d2433; }
-    h1 { font-size: 18pt; color: #14284b; margin: 0; }
+    body { font-family: dejavusans; font-size: 9.5pt; color: #1d1d1d; }
+    h1 { font-size: 18pt; color: #1f8dbb; margin: 0; }
     .sub { color: #6b7486; font-size: 9pt; margin-bottom: 8pt; }
-    h2 { font-size: 12.5pt; color: #14284b; border-bottom: 1.5pt solid #14284b; padding-bottom: 2pt; margin: 12pt 0 5pt; }
-    h3 { font-size: 10pt; color: #14284b; margin: 7pt 0 2pt; }
+    h2 { font-size: 12.5pt; color: #1f8dbb; border-bottom: 1.5pt solid #1f8dbb; padding-bottom: 2pt; margin: 12pt 0 5pt; }
+    h3 { font-size: 10pt; color: #1d1d1d; margin: 7pt 0 2pt; border-right: 2.5pt solid #4bbce5; padding-right: 4pt; }
     table.kv { width: 100%; border-collapse: collapse; }
     table.kv td { width: 50%; padding: 1.5pt 0; vertical-align: top; }
     .k { font-weight: bold; color: #4a5263; }
     ol { margin: 3pt 0; padding-right: 14pt; }
     li { margin-bottom: 1.5pt; font-size: 8.5pt; }
     table.charge { width: 100%; border-collapse: collapse; margin-top: 5pt; font-size: 8.5pt; }
-    table.charge th { background: #14284b; color: #fff; padding: 3pt 5pt; text-align: right; }
+    table.charge th { background: #1f8dbb; color: #fff; padding: 3pt 5pt; text-align: right; }
     table.charge td { border: 0.5pt solid #c5ccd8; padding: 3pt 5pt; }
-    .box { border: 0.8pt solid #b9862c; color: #b9862c; font-weight: bold; font-size: 8pt; padding: 0 2pt; }
+    .box { border: 0.8pt solid #1f8dbb; color: #1f8dbb; font-weight: bold; font-size: 8pt; padding: 0 2pt; }
     .check { margin: 3pt 0; }
-    .tuition { font-weight: bold; color: #14284b; font-size: 10.5pt; margin: 3pt 0 5pt; }
+    .tuition { font-weight: bold; color: #1d1d1d; font-size: 10.5pt; margin: 3pt 0 5pt; padding: 4pt 6pt; background: #e0e4e6; border-right: 3pt solid #ff8a00; }
     .sig { margin-top: 4pt; }
 </style>
 </head>

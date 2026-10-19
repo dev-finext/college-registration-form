@@ -7,7 +7,7 @@
   <title>@yield('title', config('registration.form_title')) | המכללה למינהל</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ $assetBase }}assets/css/app.css?v={{ @filemtime(public_path('assets/css/app.css')) }}">
 </head>
 <body>

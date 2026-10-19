@@ -10,13 +10,26 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <div>
-      <h1 class="form-title">{{ $cfg['form_title'] }}</h1>
-      <div class="college-name">{{ $cfg['college_name'] }}</div>
+    <a class="brand" href="{{ $cfg['brand']['site_url'] }}" target="_blank" rel="noopener">
+      <img class="brand-logo" src="{{ $cfg['brand']['logo_url'] }}" alt="המכללה למינהל" width="198" height="52"
+           onerror="this.hidden = true; this.nextElementSibling.hidden = false;">
+      <span class="brand-fallback" hidden>המכללה למינהל</span>
+    </a>
+    <div class="header-actions">
+      <a class="header-phone" href="tel:{{ $cfg['brand']['phone'] }}" aria-label="טלפון {{ $cfg['brand']['phone'] }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        {{ $cfg['brand']['phone'] }}
+      </a>
     </div>
-    <button type="button" class="link-btn" id="clearDataBtn" title="מחיקת הנתונים השמורים במכשיר זה">ניקוי נתונים מהמכשיר</button>
   </div>
 </header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <h1 class="form-title">{{ $cfg['form_title'] }}</h1>
+    <div><span class="college-name">{{ $cfg['college_name'] }}</span></div>
+  </div>
+</section>
 
 <main class="wrap">
 
@@ -108,6 +121,17 @@
     <article class="doc" id="docBody"></article>
   </div>
 @endif
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-contact">
+      <a href="tel:{{ $cfg['brand']['phone'] }}" dir="ltr">{{ $cfg['brand']['phone'] }}</a>
+      <a href="mailto:{{ $cfg['brand']['email'] }}">{{ $cfg['brand']['email'] }}</a>
+      <span>{{ $cfg['brand']['address'] }}</span>
+    </div>
+    <button type="button" class="link-btn footer-clear" id="clearDataBtn" title="מחיקת הנתונים השמורים במכשיר זה">ניקוי נתונים מהמכשיר</button>
+  </div>
+</footer>
 
 <div class="toast" id="toast" role="status" hidden></div>
 
