@@ -149,6 +149,7 @@
     fillSelect(sel, branch.majors);
     sel.disabled = false;
     if (selected && branch.majors.includes(selected)) sel.value = selected;
+    else if (branch.majors.length === 1) sel.value = branch.majors[0]; // שלוחה עם מגמה אחת (אילת)
   }
 
   function populateStatic() {

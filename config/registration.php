@@ -40,26 +40,38 @@ return [
     'rate_per_hour' => (int) env('REGISTRATION_RATE_PER_HOUR', 10),
     'duplicate_window_minutes' => 10,
 
+    // Branches and majors from the college's list ("רשימת שלוחות + מגמות.xlsx", 2026-10-21),
+    // in the order the college gave them. Recipient emails are still placeholders.
     'branches' => [
+        'haifa' => [
+            'name' => 'חיפה',
+            'emails' => ['manager.haifa@example.org', 'secretary.haifa@example.org'],
+            'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'תוכנה', 'מכינה טכנולוגית'],
+        ],
+        'petah-tikva' => [
+            'name' => 'פתח תקווה',
+            'emails' => ['manager.petah-tikva@example.org'],
+            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
+        ],
         'rishon' => [
             'name' => 'ראשון לציון',
-            'emails' => ['manager.rishon@example.org', 'office.rishon@example.org'],
-            'majors' => ['תוכנה', 'חשמל', 'אדריכלות ועיצוב פנים', 'מכשור רפואי', 'תעשייה וניהול'],
+            'emails' => ['manager.rishon@example.org'],
+            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
+        ],
+        'ashdod' => [
+            'name' => 'אשדוד',
+            'emails' => ['manager.ashdod@example.org'],
+            'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
         'jerusalem' => [
             'name' => 'ירושלים',
             'emails' => ['manager.jerusalem@example.org'],
-            'majors' => ['תוכנה', 'חשמל', 'אדריכלות ועיצוב פנים'],
+            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
-        'haifa' => [
-            'name' => 'חיפה',
-            'emails' => ['manager.haifa@example.org', 'secretary.haifa@example.org'],
-            'majors' => ['תוכנה', 'מכונות', 'תעשייה וניהול'],
-        ],
-        'beersheva' => [
-            'name' => 'באר שבע',
-            'emails' => ['manager.beersheva@example.org'],
-            'majors' => ['תוכנה', 'חשמל', 'מכשור רפואי'],
+        'eilat' => [
+            'name' => 'אילת',
+            'emails' => ['manager.eilat@example.org'],
+            'majors' => ['אדריכלות ועיצוב פנים'],
         ],
     ],
 

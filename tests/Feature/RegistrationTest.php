@@ -37,6 +37,23 @@ class RegistrationTest extends TestCase
         $this->get('/no-such-branch')->assertNotFound();
     }
 
+    public function test_branches_and_majors_follow_the_college_list(): void
+    {
+        $branches = config('registration.branches');
+
+        $this->assertSame(['haifa', 'petah-tikva', 'rishon', 'ashdod', 'jerusalem', 'eilat'], array_keys($branches));
+        $this->assertCount(8, $branches['haifa']['majors']);
+        $this->assertSame(['אדריכלות ועיצוב פנים'], $branches['eilat']['majors']);
+        $this->assertNotContains('תוכנה', $branches['jerusalem']['majors']);
+    }
+
+    public function test_every_branch_has_its_own_link(): void
+    {
+        foreach (array_keys(config('registration.branches')) as $branch) {
+            $this->get("/{$branch}")->assertOk()->assertSee('"lockedBranch":"'.$branch.'"', false);
+        }
+    }
+
     public function test_token_endpoint_returns_a_fresh_csrf_token(): void
     {
         $this->getJson('/token')->assertOk()->assertJsonStructure(['token']);
@@ -50,7 +67,7 @@ class RegistrationTest extends TestCase
 
         Mail::assertSent(RegistrationSubmitted::class, function (RegistrationSubmitted $mail) {
             return $mail->hasTo('manager.jerusalem@example.org')
-                && $mail->hasSubject('טופס רישום הנדסאים - ענת וולפמן - תוכנה')
+                && $mail->hasSubject('טופס רישום הנדסאים - ענת וולפמן - חשמל')
                 && $mail->hasReplyTo('anat@example.com')
                 && str_starts_with($mail->pdf, '%PDF')
                 && $mail->data['mobile'] === '0505773045';
@@ -76,6 +93,7 @@ class RegistrationTest extends TestCase
 
     public function test_rejects_major_not_offered_by_branch(): void
     {
+        // Jerusalem has no mechanical engineering; Haifa and Ashdod do.
         $this->postJson('/register', $this->payload(['branch' => 'jerusalem', 'major' => 'מכונות']))
             ->assertUnprocessable()
             ->assertJsonValidationErrors('major');
