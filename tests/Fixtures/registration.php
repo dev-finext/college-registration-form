@@ -9,7 +9,7 @@ return [
     'lastNameEn' => 'Wolfman',
     'idNumber' => '123456782',
     'branch' => 'jerusalem',
-    'major' => 'תוכנה',
+    'major' => 'חשמל',
     'startTerm' => 'סתיו',
     'studyTrack' => 'ערב',
     'certificateType' => 'בגרות מלאה',
