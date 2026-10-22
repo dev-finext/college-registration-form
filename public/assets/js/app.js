@@ -87,13 +87,12 @@
 
   function writeForm(data) {
     for (const el of form.elements) {
-      if (!el.name || !(el.name in data) || el.name === 'major') continue;
+      if (!el.name || !(el.name in data)) continue;
       if (el.name === 'branch' && lockedBranch) continue; // קישור שלוחה גובר על שלוחה שנשמרה קודם
       if (el.type === 'checkbox') el.checked = !!data[el.name];
       else if (el.type === 'radio') el.checked = data[el.name] === el.value;
       else el.value = data[el.name];
     }
-    populateMajors(data.major);
   }
 
   /* ---------- שמירה בדפדפן (onboarding) ---------- */
@@ -140,21 +139,8 @@
     if (lockedBranch) { sel.value = lockedBranch.id; sel.disabled = true; }
   }
 
-  function populateMajors(selected) {
-    const sel = $('#major');
-    const branch = CFG.branches.find(b => b.id === $('#branch').value);
-    sel.length = 0;
-    if (!branch) { sel.add(new Option('יש לבחור שלוחה קודם', '')); sel.disabled = true; return; }
-    sel.add(new Option('בחירת מגמה', ''));
-    fillSelect(sel, branch.majors);
-    sel.disabled = false;
-    if (selected && branch.majors.includes(selected)) sel.value = selected;
-    else if (branch.majors.length === 1) sel.value = branch.majors[0]; // שלוחה עם מגמה אחת (אילת)
-  }
-
   function populateStatic() {
     populateBranches();
-    populateMajors();
     $$('[data-max="today"]').forEach(el => { el.max = isoToday(); });
   }
 
@@ -537,7 +523,6 @@
     clearTimeout(saveTimer);
     form.reset();
     if (lockedBranch) $('#branch').value = lockedBranch.id;
-    populateMajors();
     state.step = 0; state.maxStep = 0; state.signature = null; state.data = {};
     sig.clear(true);
     clearStorage();
@@ -597,7 +582,6 @@
       applyConditions(); applyFills(); scheduleSave();
     });
     form.addEventListener('change', e => {
-      if (e.target.name === 'branch') populateMajors();
       if (e.target.type === 'radio' || e.target.type === 'checkbox' || e.target.tagName === 'SELECT') validateField(e.target);
       applyConditions(); applyFills(); scheduleSave();
     });
