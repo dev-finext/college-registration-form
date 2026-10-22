@@ -32,7 +32,12 @@
     </div>
     <div class="field">
       <label for="major">מגמה <span class="req">*</span></label>
-      <select id="major" name="major" required disabled><option value="">יש לבחור שלוחה קודם</option></select>
+      <select id="major" name="major" required>
+        <option value="">בחירת מגמה</option>
+        @foreach (config('registration.majors') as $major)
+          <option value="{{ $major }}">{{ $major }}</option>
+        @endforeach
+      </select>
     </div>
   </div>
 

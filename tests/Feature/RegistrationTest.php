@@ -42,9 +42,7 @@ class RegistrationTest extends TestCase
         $branches = config('registration.branches');
 
         $this->assertSame(['haifa', 'petah-tikva', 'rishon', 'ashdod', 'jerusalem', 'eilat'], array_keys($branches));
-        $this->assertCount(8, $branches['haifa']['majors']);
-        $this->assertSame(['אדריכלות ועיצוב פנים'], $branches['eilat']['majors']);
-        $this->assertNotContains('תוכנה', $branches['jerusalem']['majors']);
+        $this->assertCount(8, config('registration.majors'));
     }
 
     public function test_every_branch_has_its_own_link(): void
@@ -91,10 +89,15 @@ class RegistrationTest extends TestCase
         Mail::assertNothingSent();
     }
 
-    public function test_rejects_major_not_offered_by_branch(): void
+    public function test_every_branch_accepts_every_major(): void
     {
-        // Jerusalem has no mechanical engineering; Haifa and Ashdod do.
-        $this->postJson('/register', $this->payload(['branch' => 'jerusalem', 'major' => 'מכונות']))
+        // Mechanical engineering was once Haifa/Ashdod only; now any branch takes any major.
+        $this->postJson('/register', $this->payload(['branch' => 'eilat', 'major' => 'מכונות']))->assertOk();
+    }
+
+    public function test_rejects_a_major_that_is_not_on_the_list(): void
+    {
+        $this->postJson('/register', $this->payload(['major' => 'רפואה']))
             ->assertUnprocessable()
             ->assertJsonValidationErrors('major');
     }

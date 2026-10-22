@@ -61,7 +61,6 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         $cfg = config('registration');
-        $branch = $cfg['branches'][$this->input('branch')] ?? null;
         $date = ['nullable', 'date_format:Y-m-d'];
 
         return [
@@ -71,7 +70,7 @@ class RegistrationRequest extends FormRequest
             'lastNameEn' => ['required', 'string', 'max:50', 'regex:'.self::ENGLISH],
             'idNumber' => ['required', 'digits:9', new IsraeliId],
             'branch' => ['required', Rule::in(array_keys($cfg['branches']))],
-            'major' => ['required', Rule::in($branch['majors'] ?? [])],
+            'major' => ['required', Rule::in($cfg['majors'])],
             'startTerm' => ['required', Rule::in($cfg['start_terms'])],
             'studyTrack' => ['required', Rule::in($cfg['study_tracks'])],
 

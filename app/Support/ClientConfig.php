@@ -24,7 +24,6 @@ class ClientConfig
             'branches' => collect($cfg['branches'])->map(fn ($b, $id) => [
                 'id' => $id,
                 'name' => $b['name'],
-                'majors' => $b['majors'],
                 // Shown only on the demo's "this is the email that would be sent" box.
                 'emails' => $demo ? $b['emails'] : [],
             ])->values()->all(),

@@ -7,7 +7,7 @@
 |
 | Branches, majors and recipient emails are supplied by the college.
 | The values below are placeholders until the real list arrives.
-| Emails never reach the browser - only ids, names and majors do.
+| Emails never reach the browser - only branch ids and names do.
 |
 */
 
@@ -40,40 +40,37 @@ return [
     'rate_per_hour' => (int) env('REGISTRATION_RATE_PER_HOUR', 10),
     'duplicate_window_minutes' => 10,
 
-    // Branches and majors from the college's list ("רשימת שלוחות + מגמות.xlsx", 2026-10-21),
-    // in the order the college gave them. Recipient emails are still placeholders.
+    // Branches from the college's list ("רשימת שלוחות + מגמות.xlsx", 2026-10-21), in its order.
+    // Recipient emails are still placeholders.
     'branches' => [
         'haifa' => [
             'name' => 'חיפה',
             'emails' => ['manager.haifa@example.org', 'secretary.haifa@example.org'],
-            'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'תוכנה', 'מכינה טכנולוגית'],
         ],
         'petah-tikva' => [
             'name' => 'פתח תקווה',
             'emails' => ['manager.petah-tikva@example.org'],
-            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
         'rishon' => [
             'name' => 'ראשון לציון',
             'emails' => ['manager.rishon@example.org'],
-            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
         'ashdod' => [
             'name' => 'אשדוד',
             'emails' => ['manager.ashdod@example.org'],
-            'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
         'jerusalem' => [
             'name' => 'ירושלים',
             'emails' => ['manager.jerusalem@example.org'],
-            'majors' => ['מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'מכינה טכנולוגית'],
         ],
         'eilat' => [
             'name' => 'אילת',
             'emails' => ['manager.eilat@example.org'],
-            'majors' => ['אדריכלות ועיצוב פנים'],
         ],
     ],
+
+    // Every branch offers every major (decided 2026-10-22, replacing the per-branch list).
+    'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'תוכנה', 'מכינה טכנולוגית'],
 
     'start_terms' => ['סתיו', 'אביב'],
     'study_tracks' => ['בוקר', 'ערב'],

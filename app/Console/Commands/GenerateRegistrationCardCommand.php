@@ -36,7 +36,6 @@ class GenerateRegistrationCardCommand extends Command
             }
 
             $data['branch'] = $branch;
-            $data['major'] = $config['majors'][0];
         }
 
         try {
