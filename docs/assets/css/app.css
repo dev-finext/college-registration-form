@@ -88,7 +88,7 @@ main { flex: 1; width: 100%; }
 .intro-list { padding-inline-start: 20px; margin: 12px 0 22px; }
 .intro-list li { margin-bottom: 4px; }
 .intro-list li::marker { color: var(--brand); }
-.intro-actions { margin-top: 8px; }
+.intro-actions { margin-top: 8px; text-align: center; }
 .resume-box {
   display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
   background: var(--brand-tint); border-inline-start: 5px solid var(--brand);
@@ -132,6 +132,9 @@ input[type=text], input:not([type]), input[type=tel], input[type=email], input[t
   transition: border-color .15s, box-shadow .15s;
 }
 input[dir=ltr] { text-align: left; }
+/* שדה עם list (כמו ארץ לידה) מקבל חץ נפתח מובנה ב-Chrome/Edge; מסתירים אותו כאן */
+input[list]::-webkit-calendar-picker-indicator { display: none !important; }
+input[list] { -webkit-appearance: none; }
 input[type=date] { text-align: right; }
 select { appearance: none; padding-left: 34px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231f8dbb' stroke-width='1.8' fill='none'/%3E%3C/svg%3E");
@@ -159,7 +162,9 @@ input:focus, select:focus { outline: none; border-color: var(--brand); box-shado
 .choice-card:hover span { border-color: var(--brand); color: var(--brand); }
 .choice-card input:checked + span { background: var(--brand); border-color: var(--brand); color: #fff; }
 .choice-card input:focus-visible + span { box-shadow: 0 0 0 3px rgba(31, 141, 187, .3); }
-.field.has-error .choice-card span { border-color: var(--error); }
+/* שגיאה בקבוצת בחירה (רדיו בעיצוב כרטיסים) מסומנת סביב השדה כולו,
+   לא בצביעת כל כרטיס וכרטיס באדום */
+.field.has-error .choice-row { outline: 1.5px solid var(--error); outline-offset: 4px; border-radius: 8px; }
 
 /* תיבות סימון */
 .check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 15px; }

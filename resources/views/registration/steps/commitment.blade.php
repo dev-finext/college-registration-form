@@ -27,10 +27,10 @@
   </div>
 
   <div class="field">
-    <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>{{ config('registration.commitment_confirm') }} <span class="req">*</span></span></label>
+    <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>{{ config('registration.commitment_confirm') }} <span class="req">(חובה)</span></span></label>
   </div>
 
   <div class="field">
-    <label class="check"><input type="checkbox" name="privacyPolicyAccepted" required><span>{{ config('registration.privacy_policy_confirm') }} <a href="{{ config('registration.privacy_policy_url') }}" target="_blank" rel="noopener">מדיניות הגנת הפרטיות</a> <span class="req">*</span></span></label>
+    <label class="check"><input type="checkbox" name="privacyPolicyAccepted" required><span>{{ config('registration.privacy_policy_confirm') }} <a href="{{ config('registration.privacy_policy_url') }}" target="_blank" rel="noopener">מדיניות הגנת הפרטיות</a> <span class="req">(חובה)</span></span></label>
   </div>
 </section>
