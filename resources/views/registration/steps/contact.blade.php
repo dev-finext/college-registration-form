@@ -44,12 +44,12 @@
       <input id="personalNumber" name="personalNumber" inputmode="numeric" maxlength="9" dir="ltr">
     </div>
     <div class="field">
-      <label for="enlistDate">תאריך גיוס</label>
-      <input type="date" id="enlistDate" name="enlistDate" data-max="today">
+      <label for="enlistDate">תאריך גיוס <span class="req">*</span></label>
+      <input type="date" id="enlistDate" name="enlistDate" required data-max="today">
     </div>
     <div class="field">
-      <label for="releaseDate">תאריך שחרור</label>
-      <input type="date" id="releaseDate" name="releaseDate">
+      <label for="releaseDate">תאריך שחרור <span class="req">*</span></label>
+      <input type="date" id="releaseDate" name="releaseDate" required>
     </div>
   </div>
 

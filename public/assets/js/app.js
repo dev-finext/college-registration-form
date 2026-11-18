@@ -45,7 +45,8 @@
     mobile: v => /^05\d{8}$/.test(digits(v)) || 'מספר נייד לא תקין (לדוגמה 050-1234567)',
     phone: v => /^0\d{8,9}$/.test(digits(v)) || 'מספר טלפון לא תקין',
     email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) || 'כתובת דוא"ל לא תקינה',
-    zip: v => /^\d{7}$/.test(v) || 'מיקוד צריך להכיל 7 ספרות'
+    zip: v => /^\d{7}$/.test(v) || 'מיקוד צריך להכיל 7 ספרות',
+    address: v => /^[֐-׿0-9\s'".\/-]+$/.test(v) || 'יש להזין אותיות בעברית בלבד'
   };
 
   // בדיקות עקביות בין שדות, לפי שלב
@@ -55,8 +56,8 @@
       const birth = parseDate(d.birthDate), now = new Date();
       if (birth) {
         const age = yearsBetween(birth, now);
-        if (age < 15) errs.push(['birthDate', 'גיל המועמד/ת נמוך מ-15, יש לבדוק את תאריך הלידה']);
-        if (age > 90) errs.push(['birthDate', 'יש לבדוק את תאריך הלידה']);
+        if (age < 18) errs.push(['birthDate', 'יש להיות בן/בת 18 ומעלה כדי להירשם']);
+        else if (age > 90) errs.push(['birthDate', 'יש לבדוק את תאריך הלידה']);
       }
       const aliyah = parseDate(d.aliyahDate);
       if (birth && aliyah && isVisible('aliyahDate') && aliyah < birth) errs.push(['aliyahDate', 'תאריך העלייה מוקדם מתאריך הלידה']);
@@ -101,7 +102,6 @@
     const payload = { v: 1, savedAt: Date.now(), expiresAt: Date.now() + TTL_MS, step: state.step, maxStep: state.maxStep, data: state.data, signature: state.signature };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-      setSaveStatus('נשמר במכשיר ✓');
     } catch (e) {
       setSaveStatus('לא ניתן לשמור במכשיר זה');
     }
@@ -286,7 +286,7 @@
         ['שם האב', d.fatherName], ['שם האם', d.motherName], ['שירות', d.serviceType],
         ...(d.serviceType && d.serviceType !== 'לא' ? [['גיוס', heDate(d.enlistDate)], ['שחרור', heDate(d.releaseDate)]] : []),
         ['מקור מידע', d.infoSource]] },
-      { step: 3, title: 'כתב התחייבות', rows: [['אישור תנאים', yes(d.commitmentAccepted)]] },
+      { step: 3, title: 'כתב התחייבות', rows: [['אישור תנאים', yes(d.commitmentAccepted)], ['מדיניות פרטיות', yes(d.privacyPolicyAccepted)]] },
       { step: 4, title: 'רשות וסודיות', rows: [
         ['העברה לחברות השמה', yes(d.consentPlacement)], ['קבלת הודעות', yes(d.consentMessages)],
         ['ויתור סודיות', yes(d.waiverAccepted)],
@@ -373,46 +373,6 @@
     return { resize, clear };
   })();
 
-  /* ---------- מסמך PDF (תצוגה מקדימה) ---------- */
-  function renderDoc(d) {
-    const branch = CFG.branches.find(b => b.id === d.branch);
-    const row = (k, v) => `<div><dt>${k}:</dt><dd>${esc(v || '—')}</dd></div>`;
-    const box = v => `<span class="box">${v ? '✕' : ''}</span>`;
-    const clauses = $$('.clauses li').map(li => `<li>${esc(li.textContent)}</li>`).join('');
-    return `
-      <h1>${CFG.formTitle}</h1><div class="doc-sub">${CFG.collegeName}</div>
-      <h2>פרטי הסטודנט/ית</h2>
-      <dl>${row('שם פרטי (עברית)', d.firstNameHe)}${row('שם משפחה (עברית)', d.lastNameHe)}
-      ${row('First name', d.firstNameEn)}${row('Last name', d.lastNameEn)}${row('מס\' ת"ז', d.idNumber)}<div></div>
-      ${row('שלוחה', branch?.name)}${row('מגמה', d.major)}${row('מועד פתיחת לימודים', d.startTerm)}${row('מסלול לימודים', d.studyTrack)}</dl>
-      <h2>טופס בקשת הרשמה</h2>
-      <h3>המסלול</h3><dl>${row('תאריך הרשמה', heDate(isoToday()))}${row('סוג תעודה', d.certificateType)}</dl>
-      <h3>פרטים אישיים</h3><dl>${row('תאריך לידה', heDate(d.birthDate))}${row('ארץ לידה', d.birthCountry)}
-      ${d.birthCountry !== 'ישראל' ? row('תאריך עלייה', heDate(d.aliyahDate)) : ''}${row('מגדר', d.gender)}</dl>
-      <h3>כתובת מגורים</h3><dl>${row('ישוב', d.city)}${row('רחוב / ת.ד.', d.street)}${row('מספר', d.houseNumber)}${row('מיקוד', d.zip)}</dl>
-      <h3>דרכי התקשרות</h3><dl>${row('טלפון נייד', d.mobile)}${row('טלפון נוסף', d.phone2)}${row('דוא"ל', d.email)}</dl>
-      <h3>משפחה</h3><dl>${row('שם האב', d.fatherName)}${row('שם האם', d.motherName)}</dl>
-      <h3>שירות צבאי / לאומי</h3><dl>${row('שירות בצה"ל / שירות לאומי', d.serviceType)}
-      ${d.serviceType === 'צה"ל' ? row('מס\' אישי', d.personalNumber) : ''}
-      ${d.serviceType && d.serviceType !== 'לא' ? row('תאריך גיוס', heDate(d.enlistDate)) + row('תאריך שחרור', heDate(d.releaseDate)) : ''}</dl>
-      <h3>מקור מידע על המכללה</h3><dl>${row('סימון', d.infoSource)}</dl>
-      <h2>כתב התחייבות והצהרת הסטודנט</h2>
-      <p><strong>שכר הלימוד במלואו (שייקבע בנהלי מה"ט) + 200 ₪ דמי פתיחת תיק ורישום</strong></p>
-      <ol>${clauses}</ol>
-      <div class="doc-check">${box(d.commitmentAccepted)} קראתי, הבנתי ואני מאשר/ת את כל תנאי כתב ההתחייבות וסעיפים 1–25 כמפורט לעיל.</div>
-      <h2>סעיפי רשות (אופציונלי)</h2>
-      <div class="doc-check">${box(d.consentPlacement)} אני מאשר/ת למכללה להעביר את פרטיי האישיים (שם וטלפון) לחברות כוח אדם למטרות השמה.</div>
-      <div class="doc-check">${box(d.consentMessages)} אני מאשר/ת קבלת הודעות/SMS ודוא"ל (מה"ט והמכללה) לטלפון הנייד שלי: ${esc(d.mobile)}</div>
-      <h2>ויתור על סודיות</h2>
-      <div class="doc-check">${box(d.waiverMath)} מתמטיקה (3 יח' ומעלה)</div>
-      <div class="doc-check">${box(d.waiverEnglish)} אנגלית (3 יח' ומעלה)</div>
-      <div class="doc-check">${box(d.waiverHebrew)} עברית (2 יח' ומעלה)</div>
-      <div class="doc-check">${box(d.waiverAccepted)} אני מאשר/ת את ויתור הסודיות כמפורט לעיל.</div>
-      <dl>${row('ת"ז', d.idNumber)}${row('תאריך', heDate(isoToday()))}${row('שם הסטודנט', `${d.firstNameHe} ${d.lastNameHe}`)}${row('שם המכללה', CFG.collegeName)}</dl>
-      <h2>חתימה דיגיטלית</h2>
-      <div class="doc-sig">${state.signature ? `<img src="${state.signature}" alt="חתימה">` : '—'}</div>`;
-  }
-
   /* ---------- שליחה ---------- */
   function stepOf(name) {
     const el = form.elements[name];
@@ -456,13 +416,6 @@
   function showDone(d, branchName) {
     $('#doneName').textContent = d.firstNameHe;
     $('#doneBranch').textContent = branchName || '';
-    if (CFG.demoMode) {
-      const branch = CFG.branches.find(b => b.id === d.branch);
-      $('#mailTo').textContent = (branch?.emails || []).join(', ');
-      $('#mailSubject').textContent = `טופס רישום הנדסאים - ${d.firstNameHe} ${d.lastNameHe} - ${d.major}`;
-      $('#mailAttachment').textContent = `registration-${d.idNumber.padStart(9, '0')}-${isoToday().replace(/-/g, '')}.pdf`;
-      $('#docBody').innerHTML = renderDoc(d);
-    }
     clearTimeout(saveTimer);
     clearStorage();
     $('#wizard').hidden = true;
@@ -593,12 +546,6 @@
     form.addEventListener('keydown', e => {
       if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); $('#nextBtn').hidden || $('#nextBtn').click(); }
     });
-
-    if (CFG.demoMode) {
-      $('#previewDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = false; document.body.style.overflow = 'hidden'; });
-      $('#closeDocBtn').addEventListener('click', () => { $('#docOverlay').hidden = true; document.body.style.overflow = ''; });
-      $('#printDocBtn').addEventListener('click', () => window.print());
-    }
 
     applyConditions();
     applyFills();

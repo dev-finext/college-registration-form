@@ -34,9 +34,8 @@
   {{-- מסך פתיחה / חזרה לטופס --}}
   <section class="card intro" id="introScreen">
     <h2>ברוכים הבאים לרישום ללימודי הנדסאים</h2>
-    <p>מילוי הטופס לוקח כ-10 דקות. ההתקדמות נשמרת אוטומטית <strong>במכשיר ובדפדפן הזה</strong> עד 12 חודשים, אז אפשר לעצור ולחזור בכל שלב.</p>
     <ul class="intro-list">
-      <li>שם ותעודת זהות ממלאים פעם אחת, והם יופיעו אוטומטית בכל מקום בטופס</li>
+      <li>שם ותעודת זהות ממלאים פעם אחת בלבד, בתחילת הטופס</li>
       <li>בסיום חותמים על המסך, וטופס הרישום נשלח ישירות לשלוחה שבחרתם</li>
       <li>במחשב משותף מומלץ ללחוץ על "ניקוי נתונים מהמכשיר" בסיום</li>
     </ul>
@@ -92,33 +91,11 @@
     <div class="done-icon" aria-hidden="true">✓</div>
     <h2>טופס הרישום נשלח בהצלחה</h2>
     <p>תודה <strong id="doneName"></strong>! טופס הרישום הועבר לשלוחת <strong id="doneBranch"></strong>, ונציג/ה יחזרו אליך בהקדם.</p>
-    @if ($clientConfig['demoMode'])
-      <div class="demo-mail">
-        <div class="demo-mail-title">בפועל יישלח המייל הבא (בדמו לא נשלח דבר):</div>
-        <div><span class="muted">אל:</span> <span id="mailTo" dir="ltr"></span></div>
-        <div><span class="muted">נושא:</span> <span id="mailSubject"></span></div>
-        <div><span class="muted">קובץ מצורף:</span> <span id="mailAttachment" dir="ltr"></span></div>
-      </div>
-    @endif
     <div class="done-actions">
-      @if ($clientConfig['demoMode'])
-        <button type="button" class="btn btn-primary" id="previewDocBtn">תצוגה מקדימה של מסמך ה-PDF</button>
-      @endif
       <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
     </div>
   </section>
 </main>
-
-@if ($clientConfig['demoMode'])
-  {{-- תצוגה מקדימה של המסמך (דמו בלבד; בשרת ה-PDF נוצר ב-mPDF) --}}
-  <div class="doc-overlay" id="docOverlay" hidden>
-    <div class="doc-toolbar">
-      <button type="button" class="btn btn-primary" id="printDocBtn">הדפסה / שמירה כ-PDF</button>
-      <button type="button" class="btn btn-ghost" id="closeDocBtn">סגירה</button>
-    </div>
-    <article class="doc" id="docBody"></article>
-  </div>
-@endif
 
 <footer class="site-footer">
   <div class="wrap footer-inner">

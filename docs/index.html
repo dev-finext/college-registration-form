@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/app.css?v=1792422966">
+  <link rel="stylesheet" href="assets/css/app.css?v=1794989917">
 </head>
 <body>
   
@@ -40,9 +40,8 @@
   
   <section class="card intro" id="introScreen">
     <h2>ברוכים הבאים לרישום ללימודי הנדסאים</h2>
-    <p>מילוי הטופס לוקח כ-10 דקות. ההתקדמות נשמרת אוטומטית <strong>במכשיר ובדפדפן הזה</strong> עד 12 חודשים, אז אפשר לעצור ולחזור בכל שלב.</p>
     <ul class="intro-list">
-      <li>שם ותעודת זהות ממלאים פעם אחת, והם יופיעו אוטומטית בכל מקום בטופס</li>
+      <li>שם ותעודת זהות ממלאים פעם אחת בלבד, בתחילת הטופס</li>
       <li>בסיום חותמים על המסך, וטופס הרישום נשלח ישירות לשלוחה שבחרתם</li>
       <li>במחשב משותף מומלץ ללחוץ על "ניקוי נתונים מהמכשיר" בסיום</li>
     </ul>
@@ -165,11 +164,6 @@
   </div>
 
   <h3 class="sub-title">פרטים אישיים</h3>
-  <div class="autofill-note">
-    <span>שם: <strong data-fill="fullNameHe"></strong></span>
-    <span>ת"ז: <strong data-fill="idNumber"></strong></span>
-    <span class="muted">(מולא אוטומטית מהשלב הקודם)</span>
-  </div>
   <div class="grid">
     <div class="field">
       <label for="birthDate">תאריך לידה <span class="req">*</span></label>
@@ -208,11 +202,11 @@
   <div class="grid">
     <div class="field">
       <label for="city">ישוב <span class="req">*</span></label>
-      <input id="city" name="city" required maxlength="80" autocomplete="address-level2">
+      <input id="city" name="city" required data-rule="address" maxlength="80" autocomplete="address-level2">
     </div>
     <div class="field">
       <label for="street">רחוב / ת.ד. <span class="req">*</span></label>
-      <input id="street" name="street" required maxlength="80" autocomplete="address-line1">
+      <input id="street" name="street" required data-rule="address" maxlength="80" autocomplete="address-line1">
     </div>
     <div class="field">
       <label for="houseNumber">מספר</label>
@@ -270,12 +264,12 @@
       <input id="personalNumber" name="personalNumber" inputmode="numeric" maxlength="9" dir="ltr">
     </div>
     <div class="field">
-      <label for="enlistDate">תאריך גיוס</label>
-      <input type="date" id="enlistDate" name="enlistDate" data-max="today">
+      <label for="enlistDate">תאריך גיוס <span class="req">*</span></label>
+      <input type="date" id="enlistDate" name="enlistDate" required data-max="today">
     </div>
     <div class="field">
-      <label for="releaseDate">תאריך שחרור</label>
-      <input type="date" id="releaseDate" name="releaseDate">
+      <label for="releaseDate">תאריך שחרור <span class="req">*</span></label>
+      <input type="date" id="releaseDate" name="releaseDate" required>
     </div>
   </div>
 
@@ -309,13 +303,13 @@
               <li>שכר הלימוד יוסדר עד עשרה ימי עסקים לפני תחילת הלימודים; אי הסדרתו עלול למנוע השתתפות בלימודים ו/או קבלת תעודה.</li>
               <li>ביטול השתתפות בלימודים ייכנס לתוקף רק מיום קבלת הודעה בכתב על גבי טופס הפסקת לימודים במזכירות המכללה.</li>
               <li>המכללה רשאית, לפי שיקול דעתה, שלא לפתוח מגמה — ובמקרה זה יוחזרו כל התשלומים ששולמו, כולל דמי פתיחת תיק.</li>
-              <li>שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם; משיכת שק לפני מועד הפירעון תחייב בעמלות הבנק והמכללה.</li>
+              <li>שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם.</li>
               <li>שקים שיחזרו כבלתי נפרעים יחייבו בתשלום עמלת בנק ועמלת מכללה.</li>
               <li>חיוב סטודנט שהפסיק לימודיו יבוצע לפי טבלת החיוב המדורגת (ראו טבלה) ולפי נוהלי מה&quot;ט.</li>
               <li>דמי פתיחת תיק ורישום אינם ניתנים להחזר, אלא אם המכללה עצמה מבטלת את הלימודים.</li>
-              <li>הרישום הוא כמועמד/ת עד הצגת תעודת השכלה מתאימה לדרישות הקבלה של מה&quot;ט.</li>
+              <li>הרישום הוא כמועמד/ת עד הצגת תעודת השכלה או ציונים מתאימים לדרישות הקבלה של מה&quot;ט.</li>
               <li>סטודנט שהתקבל שלא מן המניין ישלים את התחייבויותיו עד תום שנת הלימודים הראשונה.</li>
-              <li>נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות או לקבל דיפלומה.</li>
+              <li>נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות ו/או לקבל דיפלומה.</li>
               <li>יש לעמוד בכל המטלות שנקבעו על ידי המרצה, לרבות ציון עובר בכל הבחינות.</li>
               <li>לא תהיה כל תביעה כלפי המכללה בשל אי הכללה ברשימת נבחנים או אי קבלת תעודת גמר בשל אי עמידה בתנאי מה&quot;ט.</li>
               <li>לפי נוהל &quot;התיישנות&quot; של מה&quot;ט, יש להשלים את כל לימודי המסלול, כולל פרויקט גמר, תוך 7 שנים ממועד תחילת הלימודים.</li>
@@ -346,31 +340,20 @@
   <div class="field">
     <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>קראתי, הבנתי ואני מאשר/ת את כל תנאי כתב ההתחייבות וסעיפים 1–25 כמפורט לעיל. <span class="req">*</span></span></label>
   </div>
-  <div class="sign-line">
-    <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-    <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-    <span>תאריך: <strong data-fill="today"></strong></span>
+
+  <div class="field">
+    <label class="check"><input type="checkbox" name="privacyPolicyAccepted" required><span>קראתי ואני מאשר/ת את <a href="https://college.org.il/%D7%94%D7%A6%D7%94%D7%A8%D7%AA-%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-%D7%A4%D7%A8%D7%98%D7%99%D7%95%D7%AA/" target="_blank" rel="noopener">מדיניות הגנת הפרטיות</a> <span class="req">*</span></span></label>
   </div>
 </section>
       <section class="step card" data-title="רשות וסודיות">
-  <h2 class="block-title">סעיפי רשות (אופציונלי)</h2>
-
-  <div class="optional-clause">
+  <h2 class="block-title">העברת פרטים לחברות השמה (אופציונלי)</h2>
+  <div class="field">
     <label class="check"><input type="checkbox" name="consentPlacement"><span>אני מאשר/ת למכללה להעביר את פרטיי האישיים (שם וטלפון) לחברות כוח אדם למטרות השמה, ללא כל תשלום מצדי.</span></label>
-    <div class="sign-line" data-show-if="consentPlacement=true">
-      <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-      <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-      <span>תאריך: <strong data-fill="today"></strong></span>
-    </div>
   </div>
 
-  <div class="optional-clause">
+  <h2 class="block-title">קבלת הודעות ועדכונים (אופציונלי)</h2>
+  <div class="field">
     <label class="check"><input type="checkbox" name="consentMessages"><span>אני מאשר/ת קבלת הודעות/SMS ודוא&quot;ל בנושאים שונים וביניהם (אך לא רק): הודעות מידע ממה&quot;ט (בדבר החזרים כספיים וכדומה) או הודעות מידע של המכללה (מידע, קורסים, מבצעים, ציונים ומועדי בחינות) לטלפון הנייד שלי.</span></label>
-    <div class="sign-line" data-show-if="consentMessages=true">
-      <span>טלפון נייד: <strong data-fill="mobile" dir="ltr"></strong></span>
-      <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-      <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-    </div>
   </div>
 
   <h2 class="block-title">ויתור על סודיות</h2>
@@ -380,16 +363,8 @@
           <label class="check"><input type="checkbox" name="waiverEnglish"><span>אנגלית (3 יח&#039; ומעלה)</span></label>
           <label class="check"><input type="checkbox" name="waiverHebrew"><span>עברית (2 יח&#039; ומעלה)</span></label>
       </div>
-  <div class="sign-line">
-    <span>ת"ז: <strong data-fill="idNumber"></strong></span>
-    <span>תאריך: <strong data-fill="today"></strong></span>
-  </div>
   <div class="field">
     <label class="check"><input type="checkbox" name="waiverAccepted"><span>אני מאשר/ת את ויתור הסודיות כמפורט לעיל.</span></label>
-  </div>
-  <div class="sign-line">
-    <span>שם הסטודנט: <strong data-fill="fullNameHe"></strong></span>
-    <span>שם המכללה: <strong>המכללה למינהל — בית הספר להנדסאים</strong></span>
   </div>
 </section>
       <section class="step card" data-title="חתימה ושליחה">
@@ -419,27 +394,11 @@
     <div class="done-icon" aria-hidden="true">✓</div>
     <h2>טופס הרישום נשלח בהצלחה</h2>
     <p>תודה <strong id="doneName"></strong>! טופס הרישום הועבר לשלוחת <strong id="doneBranch"></strong>, ונציג/ה יחזרו אליך בהקדם.</p>
-          <div class="demo-mail">
-        <div class="demo-mail-title">בפועל יישלח המייל הבא (בדמו לא נשלח דבר):</div>
-        <div><span class="muted">אל:</span> <span id="mailTo" dir="ltr"></span></div>
-        <div><span class="muted">נושא:</span> <span id="mailSubject"></span></div>
-        <div><span class="muted">קובץ מצורף:</span> <span id="mailAttachment" dir="ltr"></span></div>
-      </div>
-        <div class="done-actions">
-              <button type="button" class="btn btn-primary" id="previewDocBtn">תצוגה מקדימה של מסמך ה-PDF</button>
-            <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
+    <div class="done-actions">
+      <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
     </div>
   </section>
 </main>
-
-  
-  <div class="doc-overlay" id="docOverlay" hidden>
-    <div class="doc-toolbar">
-      <button type="button" class="btn btn-primary" id="printDocBtn">הדפסה / שמירה כ-PDF</button>
-      <button type="button" class="btn btn-ghost" id="closeDocBtn">סגירה</button>
-    </div>
-    <article class="doc" id="docBody"></article>
-  </div>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
@@ -454,7 +413,7 @@
 
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script>window.APP_CONFIG = {"collegeName":"המכללה למינהל — בית הספר להנדסאים","formTitle":"טופס רישום להנדסאים","storageTtlDays":365,"demoMode":true,"submitUrl":null,"tokenUrl":null,"lockedBranch":null,"branches":[{"id":"haifa","name":"חיפה","emails":["manager.haifa@example.org","secretary.haifa@example.org"]},{"id":"petah-tikva","name":"פתח תקווה","emails":["manager.petah-tikva@example.org"]},{"id":"rishon","name":"ראשון לציון","emails":["manager.rishon@example.org"]},{"id":"ashdod","name":"אשדוד","emails":["manager.ashdod@example.org"]},{"id":"jerusalem","name":"ירושלים","emails":["manager.jerusalem@example.org"]},{"id":"eilat","name":"אילת","emails":["manager.eilat@example.org"]}],"csrfToken":null};</script>
-<script src="assets/js/app.js?v=1792670380"></script>
+<script>window.APP_CONFIG = {"collegeName":"המכללה למינהל — בית הספר להנדסאים","formTitle":"טופס רישום להנדסאים","storageTtlDays":365,"demoMode":true,"submitUrl":null,"tokenUrl":null,"lockedBranch":null,"branches":[{"id":"haifa","name":"חיפה"},{"id":"petah-tikva","name":"פתח תקווה"},{"id":"rishon","name":"ראשון לציון"},{"id":"ashdod","name":"אשדוד"},{"id":"jerusalem","name":"ירושלים"},{"id":"eilat","name":"אילת"}],"csrfToken":null};</script>
+<script src="assets/js/app.js?v=1794989978"></script>
 </body>
 </html>

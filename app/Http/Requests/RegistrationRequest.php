@@ -14,8 +14,12 @@ class RegistrationRequest extends FormRequest
 
     private const ENGLISH = '/^[A-Za-z\s\'\-]+$/';
 
+    // Hebrew letters, plus digits and the punctuation real addresses need
+    // (house-number-style street names, "ת.ד.", hyphenated town names).
+    private const ADDRESS = '/^[\x{0590}-\x{05FF}0-9\s\'\".\/\-]+$/u';
+
     private const BOOLEANS = [
-        'commitmentAccepted', 'consentPlacement', 'consentMessages',
+        'commitmentAccepted', 'privacyPolicyAccepted', 'consentPlacement', 'consentMessages',
         'waiverMath', 'waiverEnglish', 'waiverHebrew', 'waiverAccepted',
     ];
 
@@ -79,8 +83,8 @@ class RegistrationRequest extends FormRequest
             'birthCountry' => ['required', 'string', 'max:60'],
             'aliyahDate' => [...$date, 'required_unless:birthCountry,ישראל', 'before_or_equal:today'],
             'gender' => ['required', Rule::in($cfg['genders'])],
-            'city' => ['required', 'string', 'max:80'],
-            'street' => ['required', 'string', 'max:80'],
+            'city' => ['required', 'string', 'max:80', 'regex:'.self::ADDRESS],
+            'street' => ['required', 'string', 'max:80', 'regex:'.self::ADDRESS],
             'houseNumber' => ['nullable', 'string', 'max:10'],
             'zip' => ['nullable', 'digits:7'],
 
@@ -91,11 +95,14 @@ class RegistrationRequest extends FormRequest
             'motherName' => ['nullable', 'string', 'max:50'],
             'serviceType' => ['required', Rule::in($cfg['service_types'])],
             'personalNumber' => ['nullable', 'digits_between:5,9'],
-            'enlistDate' => [...$date, 'before_or_equal:today'],
-            'releaseDate' => [...$date, 'after:enlistDate'],
+            // Required whenever the fields are shown (any service other than "לא");
+            // personalNumber stays optional even for צה"ל.
+            'enlistDate' => [...$date, 'required_unless:serviceType,לא', 'before_or_equal:today'],
+            'releaseDate' => [...$date, 'required_unless:serviceType,לא', 'after:enlistDate'],
             'infoSource' => ['nullable', Rule::in($cfg['info_sources'])],
 
             'commitmentAccepted' => ['accepted'],
+            'privacyPolicyAccepted' => ['accepted'],
             'consentPlacement' => ['boolean'],
             'consentMessages' => ['boolean'],
             'waiverMath' => ['boolean'],
@@ -118,7 +125,9 @@ class RegistrationRequest extends FormRequest
                 }
 
                 $age = $birth->diffInYears(CarbonImmutable::today());
-                if ($age < 15 || $age > 90) {
+                if ($age < 18) {
+                    $validator->errors()->add('birthDate', 'יש להיות בן/בת 18 ומעלה כדי להירשם');
+                } elseif ($age > 90) {
                     $validator->errors()->add('birthDate', 'יש לבדוק את תאריך הלידה');
                 }
 
@@ -144,6 +153,8 @@ class RegistrationRequest extends FormRequest
             'regex' => 'הערך שהוזן אינו תקין',
             'firstNameHe.regex' => 'יש להזין אותיות בעברית בלבד',
             'lastNameHe.regex' => 'יש להזין אותיות בעברית בלבד',
+            'city.regex' => 'יש להזין אותיות בעברית בלבד',
+            'street.regex' => 'יש להזין אותיות בעברית בלבד',
             'firstNameEn.regex' => 'Please use English letters only',
             'lastNameEn.regex' => 'Please use English letters only',
             'mobile.regex' => 'מספר נייד לא תקין (לדוגמה 050-1234567)',

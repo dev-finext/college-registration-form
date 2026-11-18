@@ -32,6 +32,7 @@ return [
     'releaseDate' => '2018-08-01',
     'infoSource' => 'גוגל',
     'commitmentAccepted' => true,
+    'privacyPolicyAccepted' => true,
     'consentPlacement' => false,
     'consentMessages' => true,
     'waiverMath' => true,

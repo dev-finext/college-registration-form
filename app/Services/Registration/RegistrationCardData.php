@@ -108,6 +108,15 @@ class RegistrationCardData
             ],
             'declarations' => [
                 $this->declaration($cfg['commitment_confirm'], $d['commitmentAccepted'] ?? false, $at, required: true),
+                // The URL itself is left off the card: it's a Hebrew path that comes
+                // through percent-encoded, which prints unreadably and scrambles the
+                // surrounding RTL text. The live checkbox carries the clickable link.
+                $this->declaration(
+                    $cfg['privacy_policy_confirm'].' מדיניות הגנת הפרטיות של המכללה',
+                    $d['privacyPolicyAccepted'] ?? false,
+                    $at,
+                    required: true,
+                ),
                 $this->declaration($cfg['consent_placement'], $d['consentPlacement'] ?? false, $at),
                 $this->declaration($cfg['consent_messages'], $d['consentMessages'] ?? false, $at),
                 $this->declaration($cfg['waiver_confirm'], $d['waiverAccepted'] ?? false, $at),

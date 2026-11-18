@@ -29,9 +29,8 @@
   <div class="field">
     <label class="check"><input type="checkbox" name="commitmentAccepted" required><span>{{ config('registration.commitment_confirm') }} <span class="req">*</span></span></label>
   </div>
-  <div class="sign-line">
-    <span>שם פרטי: <strong data-fill="firstNameHe"></strong></span>
-    <span>שם משפחה: <strong data-fill="lastNameHe"></strong></span>
-    <span>תאריך: <strong data-fill="today"></strong></span>
+
+  <div class="field">
+    <label class="check"><input type="checkbox" name="privacyPolicyAccepted" required><span>{{ config('registration.privacy_policy_confirm') }} <a href="{{ config('registration.privacy_policy_url') }}" target="_blank" rel="noopener">מדיניות הגנת הפרטיות</a> <span class="req">*</span></span></label>
   </div>
 </section>
