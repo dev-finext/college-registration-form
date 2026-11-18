@@ -120,7 +120,7 @@
   function clearStorage() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ } }
 
   let saveTimer, statusTimer;
-  const scheduleSave = () => { clearTimeout(saveTimer); setSaveStatus('שומר…'); saveTimer = setTimeout(save, 400); };
+  const scheduleSave = () => { clearTimeout(saveTimer); saveTimer = setTimeout(save, 400); };
   function setSaveStatus(text) {
     const el = $('#saveStatus');
     el.textContent = text;
@@ -506,14 +506,6 @@
     $('#resumeBtn').addEventListener('click', () => startWizard(state.step));
     $('#restartBtn').addEventListener('click', () => { resetAll(); startWizard(0); });
     $('#newFormBtn').addEventListener('click', () => { resetAll(); startWizard(0); });
-
-    $('#clearDataBtn').addEventListener('click', () => {
-      if (!confirm('למחוק את כל הנתונים שנשמרו במכשיר זה?')) return;
-      resetAll();
-      $('#wizard').hidden = true; $('#doneScreen').hidden = true;
-      $('#introScreen').hidden = false; $('#resumeBox').hidden = true; $('#startActions').hidden = false;
-      toast('הנתונים נמחקו מהמכשיר');
-    });
 
     $('#nextBtn').addEventListener('click', () => {
       if (!validateStep(state.step)) return;
