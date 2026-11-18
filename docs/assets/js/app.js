@@ -23,6 +23,30 @@
   const parseDate = iso => iso ? new Date(iso + 'T00:00:00') : null;
   const yearsBetween = (a, b) => (b - a) / (365.25 * 24 * 3600 * 1000);
 
+  /* ---------- שדות תאריך בפורמט dd/mm/yyyy קבוע ----------
+     הדפדפן מציג <input type="date"> לפי אזור הדפדפן (mm/dd/yyyy אצל חלק
+     מהמשתמשים), בלי אפשרות לקבוע את הסדר מהעמוד. השדה עצמו הוא טקסט חופשי
+     עם מסכה שמזינה רק dd/mm/yyyy; הערך הפנימי (ISO) נשמר ב-dataset.iso
+     ומשם קוראים אותו readForm/writeForm, כך שכל שאר הקוד (בדיקות עקביות,
+     סיכום, שליחה לשרת) ממשיך לעבוד על ISO בדיוק כמו קודם. */
+  function isValidCalendarDate(dd, mm, yyyy) {
+    const d = new Date(yyyy, mm - 1, dd);
+    return d.getFullYear() === yyyy && d.getMonth() === mm - 1 && d.getDate() === dd && yyyy >= 1900 && yyyy <= 2100;
+  }
+
+  function formatDateInput(el) {
+    const digits = el.value.replace(/\D/g, '').slice(0, 8);
+    el.value = digits.length <= 2 ? digits
+      : digits.length <= 4 ? `${digits.slice(0, 2)}/${digits.slice(2)}`
+      : `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+    if (digits.length === 8) {
+      const dd = +digits.slice(0, 2), mm = +digits.slice(2, 4), yyyy = +digits.slice(4, 8);
+      el.dataset.iso = isValidCalendarDate(dd, mm, yyyy) ? `${digits.slice(4, 8)}-${digits.slice(2, 4)}-${digits.slice(0, 2)}` : '';
+    } else {
+      el.dataset.iso = '';
+    }
+  }
+
   /* ---------- בדיקות תקינות ---------- */
   function isValidIsraeliId(raw) {
     const id = String(raw || '').trim();
@@ -80,6 +104,7 @@
       if (!el.name || el.name === 'website') continue;
       if (el.type === 'checkbox') data[el.name] = el.checked;
       else if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; else if (!(el.name in data)) data[el.name] = ''; }
+      else if ('date' in el.dataset) data[el.name] = el.dataset.iso || '';
       else data[el.name] = el.value.trim();
     }
     if (lockedBranch) data.branch = lockedBranch.id;
@@ -92,6 +117,7 @@
       if (el.name === 'branch' && lockedBranch) continue; // קישור שלוחה גובר על שלוחה שנשמרה קודם
       if (el.type === 'checkbox') el.checked = !!data[el.name];
       else if (el.type === 'radio') el.checked = data[el.name] === el.value;
+      else if ('date' in el.dataset) { el.dataset.iso = data[el.name] || ''; el.value = data[el.name] ? heDate(data[el.name]) : ''; }
       else el.value = data[el.name];
     }
   }
@@ -141,7 +167,6 @@
 
   function populateStatic() {
     populateBranches();
-    $$('[data-max="today"]').forEach(el => { el.max = isoToday(); });
   }
 
   /* ---------- שדות מותנים ומילוי אוטומטי ---------- */
@@ -198,13 +223,18 @@
       if (group.some(r => r.required) && !group.some(r => r.checked)) msg = 'יש לבחור אחת מהאפשרויות';
     } else if (el.type === 'checkbox') {
       if (el.required && !el.checked) msg = 'יש לאשר כדי להמשיך';
+    } else if ('date' in el.dataset) {
+      const v = el.value.trim();
+      if (!v) { if (el.required) msg = 'שדה חובה'; }
+      else if (!el.dataset.iso) msg = 'תאריך לא תקין';
+      else if (el.dataset.max === 'today' && el.dataset.iso > isoToday()) msg = 'התאריך לא יכול להיות עתידי';
     } else {
       const v = el.value.trim();
       if (!v && el.required) msg = el.tagName === 'SELECT' ? 'יש לבחור מהרשימה' : 'שדה חובה';
       else if (v && el.dataset.rule && RULES[el.dataset.rule]) {
         const r = RULES[el.dataset.rule](v);
         if (r !== true) msg = r;
-      } else if (v && el.type === 'date' && el.max && v > el.max) msg = 'התאריך לא יכול להיות עתידי';
+      }
     }
     if (msg) { setError(el, msg); return false; }
     clearError(el);
@@ -475,6 +505,7 @@
   function resetAll() {
     clearTimeout(saveTimer);
     form.reset();
+    $$('[data-date]', form).forEach(el => { el.dataset.iso = ''; }); // form.reset() לא מנקה dataset
     if (lockedBranch) $('#branch').value = lockedBranch.id;
     state.step = 0; state.maxStep = 0; state.signature = null; state.data = {};
     sig.clear(true);
@@ -521,6 +552,7 @@
     });
 
     form.addEventListener('input', e => {
+      if ('date' in e.target.dataset) formatDateInput(e.target);
       if (e.target.name === 'idNumber') e.target.value = e.target.value.replace(/\D/g, '');
       if (fieldWrap(e.target).classList.contains('has-error') && e.target.type !== 'radio') validateField(e.target);
       applyConditions(); applyFills(); scheduleSave();

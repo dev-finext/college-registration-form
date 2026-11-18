@@ -45,11 +45,11 @@
     </div>
     <div class="field">
       <label for="enlistDate">תאריך גיוס <span class="req">*</span></label>
-      <input type="date" id="enlistDate" name="enlistDate" required data-max="today">
+      <input type="text" id="enlistDate" name="enlistDate" required data-date data-max="today" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" dir="ltr">
     </div>
     <div class="field">
       <label for="releaseDate">תאריך שחרור <span class="req">*</span></label>
-      <input type="date" id="releaseDate" name="releaseDate" required>
+      <input type="text" id="releaseDate" name="releaseDate" required data-date inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" dir="ltr">
     </div>
   </div>
 
