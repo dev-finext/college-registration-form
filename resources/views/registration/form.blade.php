@@ -90,9 +90,6 @@
     <div class="done-icon" aria-hidden="true">✓</div>
     <h2>טופס הרישום נשלח בהצלחה</h2>
     <p>תודה <strong id="doneName"></strong>! טופס הרישום הועבר לשלוחת <strong id="doneBranch"></strong>, ונציג/ה יחזרו אליך בהקדם.</p>
-    <div class="done-actions">
-      <button type="button" class="btn btn-ghost" id="newFormBtn">מילוי טופס חדש</button>
-    </div>
   </section>
 </main>
 

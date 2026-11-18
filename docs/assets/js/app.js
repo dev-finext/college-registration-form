@@ -505,7 +505,6 @@
     $('#startBtn').addEventListener('click', () => startWizard(0));
     $('#resumeBtn').addEventListener('click', () => startWizard(state.step));
     $('#restartBtn').addEventListener('click', () => { resetAll(); startWizard(0); });
-    $('#newFormBtn').addEventListener('click', () => { resetAll(); startWizard(0); });
 
     $('#nextBtn').addEventListener('click', () => {
       if (!validateStep(state.step)) return;
