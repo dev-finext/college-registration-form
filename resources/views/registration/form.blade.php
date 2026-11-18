@@ -37,7 +37,6 @@
     <ul class="intro-list">
       <li>שם ותעודת זהות ממלאים פעם אחת בלבד, בתחילת הטופס</li>
       <li>בסיום חותמים על המסך, וטופס הרישום נשלח ישירות לשלוחה שבחרתם</li>
-      <li>במחשב משותף מומלץ ללחוץ על "ניקוי נתונים מהמכשיר" בסיום</li>
     </ul>
     <div class="resume-box" id="resumeBox" hidden>
       <div>
@@ -104,7 +103,6 @@
       <a href="mailto:{{ $cfg['brand']['email'] }}">{{ $cfg['brand']['email'] }}</a>
       <span>{{ $cfg['brand']['address'] }}</span>
     </div>
-    <button type="button" class="link-btn footer-clear" id="clearDataBtn" title="מחיקת הנתונים השמורים במכשיר זה">ניקוי נתונים מהמכשיר</button>
   </div>
 </footer>
 
