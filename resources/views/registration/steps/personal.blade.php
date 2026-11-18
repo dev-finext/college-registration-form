@@ -19,11 +19,6 @@
   </div>
 
   <h3 class="sub-title">פרטים אישיים</h3>
-  <div class="autofill-note">
-    <span>שם: <strong data-fill="fullNameHe"></strong></span>
-    <span>ת"ז: <strong data-fill="idNumber"></strong></span>
-    <span class="muted">(מולא אוטומטית מהשלב הקודם)</span>
-  </div>
   <div class="grid">
     <div class="field">
       <label for="birthDate">תאריך לידה <span class="req">*</span></label>
@@ -56,11 +51,11 @@
   <div class="grid">
     <div class="field">
       <label for="city">ישוב <span class="req">*</span></label>
-      <input id="city" name="city" required maxlength="80" autocomplete="address-level2">
+      <input id="city" name="city" required data-rule="address" maxlength="80" autocomplete="address-level2">
     </div>
     <div class="field">
       <label for="street">רחוב / ת.ד. <span class="req">*</span></label>
-      <input id="street" name="street" required maxlength="80" autocomplete="address-line1">
+      <input id="street" name="street" required data-rule="address" maxlength="80" autocomplete="address-line1">
     </div>
     <div class="field">
       <label for="houseNumber">מספר</label>

@@ -101,6 +101,11 @@ class RegistrationCardRenderingTest extends TestCase
         $this->assertTrue($commitment['accepted']);
         $this->assertTrue($commitment['required']);
         $this->assertSame('19.10.2026 14:05:09', $commitment['at']);
+
+        $privacy = collect($card['declarations'])->first(fn ($d) => str_contains($d['text'], 'מדיניות הגנת הפרטיות'));
+        $this->assertNotNull($privacy, 'The privacy-policy declaration is missing from the card.');
+        $this->assertTrue($privacy['required']);
+        $this->assertTrue($privacy['accepted']);
     }
 
     public function test_the_busiest_possible_registration_still_renders(): void

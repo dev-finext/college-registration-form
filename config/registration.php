@@ -6,8 +6,15 @@
 |--------------------------------------------------------------------------
 |
 | Branches, majors and recipient emails are supplied by the college.
-| The values below are placeholders until the real list arrives.
 | Emails never reach the browser - only branch ids and names do.
+|
+| NOTE (2026-11-18): the PDF card must be emailed to the branch the
+| candidate chose, and a branch can have more than one address - already
+| supported, since 'emails' below is an array and Mail::to() takes it as
+| one recipient list. 'real_branch_emails' holds the college's actual
+| mailboxes (from "רשימת שלוחות + מגמות (1).xlsx"); it is NOT wired to
+| delivery yet. 'branches.*.emails' stays on placeholders until the
+| college's address book is connected - swap it in then.
 |
 */
 
@@ -69,6 +76,17 @@ return [
         ],
     ],
 
+    // The college's real mailboxes per branch (same xlsx, 2026-11-18). Not used for
+    // delivery yet - see the NOTE above. Eilat has none on the list.
+    'real_branch_emails' => [
+        'haifa' => ['yuvalbe@college.org.il', 'yoavsp@college.org.il', 'linoyov@college.org.il', 'limorc@college.org.il', 'etikl@college.org.il', 'britco@college.org.il', 'amitha@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
+        'petah-tikva' => ['shiranco@college.org.il', 'sabrinac@college.org.il', 'limorna@college.org.il', 'mayal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
+        'rishon' => ['mayal@college.org.il', 'yudita@college.org.il', 'nuritni@college.org.il', 'janetc@college.org.il', 'avivas@college.org.il', 'osnatr@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
+        'ashdod' => ['dinaer@college.org.il', 'etiar@college.org.il', 'ritash@college.org.il', 'nofarm@college.org.il', 'zinaro@college.org.il', 'levanal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
+        'jerusalem' => ['anatw@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
+        'eilat' => [],
+    ],
+
     // Every branch offers every major (decided 2026-10-22, replacing the per-branch list).
     'majors' => ['מכונות', 'מכשור רפואי', 'תעשייה וניהול', 'אדריכלות ועיצוב פנים', 'הנדסאי בניין (אזרחית)', 'חשמל', 'תוכנה', 'מכינה טכנולוגית'],
 
@@ -92,13 +110,13 @@ return [
         'שכר הלימוד יוסדר עד עשרה ימי עסקים לפני תחילת הלימודים; אי הסדרתו עלול למנוע השתתפות בלימודים ו/או קבלת תעודה.',
         'ביטול השתתפות בלימודים ייכנס לתוקף רק מיום קבלת הודעה בכתב על גבי טופס הפסקת לימודים במזכירות המכללה.',
         'המכללה רשאית, לפי שיקול דעתה, שלא לפתוח מגמה — ובמקרה זה יוחזרו כל התשלומים ששולמו, כולל דמי פתיחת תיק.',
-        'שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם; משיכת שק לפני מועד הפירעון תחייב בעמלות הבנק והמכללה.',
+        'שקים שנמסרו כהסדר תשלום יישמרו/ייפרעו כמוסכם.',
         'שקים שיחזרו כבלתי נפרעים יחייבו בתשלום עמלת בנק ועמלת מכללה.',
         'חיוב סטודנט שהפסיק לימודיו יבוצע לפי טבלת החיוב המדורגת (ראו טבלה) ולפי נוהלי מה"ט.',
         'דמי פתיחת תיק ורישום אינם ניתנים להחזר, אלא אם המכללה עצמה מבטלת את הלימודים.',
-        'הרישום הוא כמועמד/ת עד הצגת תעודת השכלה מתאימה לדרישות הקבלה של מה"ט.',
+        'הרישום הוא כמועמד/ת עד הצגת תעודת השכלה או ציונים מתאימים לדרישות הקבלה של מה"ט.',
         'סטודנט שהתקבל שלא מן המניין ישלים את התחייבויותיו עד תום שנת הלימודים הראשונה.',
-        'נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות או לקבל דיפלומה.',
+        'נדרשת נוכחות של 80% לפחות מהשיעורים, היעדרות מסיבות מוצדקות בלבד; אחרת עלולה להישלל הזכות לגשת לבחינות ו/או לקבל דיפלומה.',
         'יש לעמוד בכל המטלות שנקבעו על ידי המרצה, לרבות ציון עובר בכל הבחינות.',
         'לא תהיה כל תביעה כלפי המכללה בשל אי הכללה ברשימת נבחנים או אי קבלת תעודת גמר בשל אי עמידה בתנאי מה"ט.',
         'לפי נוהל "התיישנות" של מה"ט, יש להשלים את כל לימודי המסלול, כולל פרויקט גמר, תוך 7 שנים ממועד תחילת הלימודים.',
@@ -137,5 +155,9 @@ return [
     ],
 
     'waiver_confirm' => 'אני מאשר/ת את ויתור הסודיות כמפורט לעיל.',
+
+    'privacy_policy_url' => 'https://college.org.il/%D7%94%D7%A6%D7%94%D7%A8%D7%AA-%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-%D7%A4%D7%A8%D7%98%D7%99%D7%95%D7%AA/',
+
+    'privacy_policy_confirm' => 'קראתי ואני מאשר/ת את',
 
 ];

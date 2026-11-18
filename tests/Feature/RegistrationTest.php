@@ -102,6 +102,15 @@ class RegistrationTest extends TestCase
             ->assertJsonValidationErrors('major');
     }
 
+    public function test_rejects_an_underage_candidate(): void
+    {
+        $under18 = now()->subYears(17)->format('Y-m-d');
+
+        $this->postJson('/register', $this->payload(['birthDate' => $under18]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('birthDate');
+    }
+
     public function test_checks_date_consistency(): void
     {
         $this->postJson('/register', $this->payload(['aliyahDate' => '1991-09-01']))
@@ -113,11 +122,43 @@ class RegistrationTest extends TestCase
             ->assertJsonValidationErrors('releaseDate');
     }
 
+    public function test_requires_service_dates_unless_not_serving(): void
+    {
+        $this->postJson('/register', $this->payload(['enlistDate' => null, 'releaseDate' => null]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['enlistDate', 'releaseDate']);
+
+        // "לא" drops the dates in prepareForValidation, so they're not required.
+        $this->postJson('/register', $this->payload([
+            'serviceType' => 'לא', 'personalNumber' => null, 'enlistDate' => null, 'releaseDate' => null,
+        ]))->assertOk();
+    }
+
     public function test_requires_commitment_and_signature(): void
     {
         $this->postJson('/register', $this->payload(['commitmentAccepted' => false, 'signature' => '']))
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['commitmentAccepted', 'signature']);
+    }
+
+    public function test_requires_privacy_policy_acceptance(): void
+    {
+        $this->postJson('/register', $this->payload(['privacyPolicyAccepted' => false]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('privacyPolicyAccepted');
+    }
+
+    public function test_rejects_a_city_or_street_with_latin_letters(): void
+    {
+        $this->postJson('/register', $this->payload(['city' => 'Jerusalem']))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('city');
+    }
+
+    public function test_accepts_a_numbered_street_name(): void
+    {
+        // Some Israeli streets are named by number (e.g. in Eilat).
+        $this->postJson('/register', $this->payload(['street' => 'רחוב 2']))->assertOk();
     }
 
     public function test_conditional_fields_are_dropped(): void

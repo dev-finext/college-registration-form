@@ -175,16 +175,6 @@ input:focus, select:focus { outline: none; border-color: var(--brand); box-shado
 .field.has-error .check input { border-color: var(--error); }
 .check-list { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 16px; }
 
-/* שורות מילוי אוטומטי - אריח אפור עם פס צבע, כמו אריחי התחומים באתר */
-.autofill-note, .sign-line {
-  display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: center;
-  background: #f4f6f7; border-inline-start: 4px solid var(--brand-light);
-  padding: 10px 14px; margin: 0 0 16px; font-size: 14px;
-}
-.sign-line strong, .autofill-note strong { color: var(--brand-deep); }
-.optional-clause { margin-bottom: 18px; }
-.optional-clause .sign-line { margin: 10px 30px 0 0; }
-
 /* כתב התחייבות */
 .fee-box {
   background: var(--tile); border-inline-start: 6px solid var(--cta);
@@ -336,7 +326,6 @@ input:focus, select:focus { outline: none; border-color: var(--brand); box-shado
   .stepper-mobile { display: block; font-size: 14px; font-weight: 800; color: var(--text); }
   .wizard-nav .btn { padding: 0 18px; font-size: 16px; }
   .save-status { font-size: 12px; }
-  .optional-clause .sign-line { margin-right: 0; }
   .doc { padding: 24px 18px; }
   .btn-lg { width: 100%; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
