@@ -273,7 +273,6 @@ input:focus, select:focus { outline: none; border-color: var(--brand); box-shado
   background: var(--brand-tint); border-inline-start: 5px solid var(--brand); font-size: 14px;
 }
 .demo-mail-title { font-weight: 800; margin-bottom: 6px; color: var(--brand-deep); }
-.done-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
 .hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
 
