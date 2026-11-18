@@ -22,7 +22,7 @@
   <div class="grid">
     <div class="field">
       <label for="birthDate">תאריך לידה <span class="req">*</span></label>
-      <input type="date" id="birthDate" name="birthDate" required data-max="today">
+      <input type="text" id="birthDate" name="birthDate" required data-date data-max="today" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" dir="ltr">
     </div>
     <div class="field">
       <label for="birthCountry">ארץ לידה <span class="req">*</span></label>
@@ -35,7 +35,7 @@
     </div>
     <div class="field" data-show-if="birthCountry!=ישראל">
       <label for="aliyahDate">תאריך עלייה <span class="req">*</span></label>
-      <input type="date" id="aliyahDate" name="aliyahDate" required data-max="today">
+      <input type="text" id="aliyahDate" name="aliyahDate" required data-date data-max="today" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" dir="ltr">
     </div>
     <fieldset class="field">
       <legend>מגדר <span class="req">*</span></legend>
