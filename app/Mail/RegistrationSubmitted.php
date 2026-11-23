@@ -20,14 +20,18 @@ class RegistrationSubmitted extends Mailable
         public array $data,
         public string $pdf,
         public CarbonInterface $submittedAt,
+        // True outside production: the email went to the test recipient,
+        // not the branch (see RegistrationController::store()).
+        public bool $testMode = false,
     ) {}
 
     public function envelope(): Envelope
     {
         $name = $this->data['firstNameHe'].' '.$this->data['lastNameHe'];
+        $subject = self::subjectFor($this->data);
 
         return new Envelope(
-            subject: self::subjectFor($this->data),
+            subject: $this->testMode ? '[בדיקה] '.$subject : $subject,
             replyTo: [new Address($this->data['email'], $name)],
         );
     }
@@ -39,6 +43,7 @@ class RegistrationSubmitted extends Mailable
             'branch' => config('registration.branches.'.$this->data['branch']),
             'reference' => RegistrationCardData::reference($this->data, $this->submittedAt),
             'submittedAt' => $this->submittedAt,
+            'testMode' => $this->testMode,
         ]);
     }
 

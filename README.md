@@ -22,6 +22,7 @@
 | חתימה על המסך | canvas → PNG על רקע לבן |
 | PDF בעברית | אותו מבנה כמו במדנס: `RegistrationCardData` (שדות בשורות) → `registration/card.blade.php` (טבלאות) → `RegistrationCardRenderer` (mPDF) |
 | מייל לשלוחה, כמה כתובות | `App\Mail\RegistrationSubmitted`, נושא: `טופס רישום הנדסאים - {שם} - {מגמה}`, Reply-To למועמד |
+| ניתוב מייל לפי סביבה | `APP_ENV=production` → כתובות השלוחה האמיתיות; כל סביבה אחרת → `registration.test_recipient` בלבד, עם ציון "[בדיקה]" בנושא ובגוף המייל |
 | הגנה מפני הצפה | throttle לפי IP (3 בדקה, 10 בשעה), חסימת שליחה כפולה של אותו מועמד ל-10 דקות, honeypot, CSRF |
 
 ## פיתוח מקומי
@@ -33,7 +34,8 @@ php artisan key:generate
 php artisan serve
 ```
 
-- `MAIL_MAILER=log`: המייל (כולל ה-PDF) נכתב ל-`storage/logs/laravel.log`
+- `MAIL_MAILER=log`: המייל (כולל ה-PDF) נכתב ל-`storage/logs/laravel.log`. ל-SMTP אמיתי (Mailgun) ראו `.env.example`
+- `REGISTRATION_TEST_RECIPIENT`: כל עוד `APP_ENV` אינו `production`, לכאן נשלחים כל המיילים במקום לשלוחה (ברירת מחדל: avichai+college@finext.co.il)
 - `php artisan registration:card --out=sample.pdf`: מפיק PDF לדוגמה מנתוני הבדיקה
 - בדיקות: `php artisan test`
 
@@ -51,7 +53,7 @@ php artisan demo:export
 
 1. PHP 8.3+, document root ל-`public/`
 2. `composer install --no-dev --optimize-autoloader`
-3. הגדרות `.env`: `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, פרטי SMTP (`MAIL_*`), `MAIL_FROM_ADDRESS` מדומיין עם SPF/DKIM
+3. הגדרות `.env`: `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, פרטי SMTP (`MAIL_*`), `MAIL_FROM_ADDRESS` מדומיין עם SPF/DKIM. **`APP_ENV=production` הוא גם מה שמפעיל שליחה לשלוחות האמיתיות** (ראו `registration.test_recipient` למעלה) — לפני זה כל מייל יוצא ל-`REGISTRATION_TEST_RECIPIENT` בלבד
 4. `php artisan key:generate && php artisan config:cache && php artisan route:cache && php artisan view:cache`
 5. הרשאות כתיבה ל-`storage/` ול-`bootstrap/cache/`
 6. SSL (Let's Encrypt ב-Cloudways)
