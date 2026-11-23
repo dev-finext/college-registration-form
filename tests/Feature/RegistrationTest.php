@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\RegistrationSubmitted;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -57,27 +58,52 @@ class RegistrationTest extends TestCase
         $this->getJson('/token')->assertOk()->assertJsonStructure(['token']);
     }
 
-    public function test_valid_registration_emails_pdf_to_all_branch_addresses(): void
+    public function test_outside_production_the_email_is_redirected_to_the_test_recipient(): void
     {
+        // Non-production is the default test environment (APP_ENV=testing);
+        // the branch's real address must never see a non-production submission.
         $this->postJson('/register', $this->payload())
             ->assertOk()
             ->assertJson(['ok' => true, 'branch' => 'ירושלים']);
 
         Mail::assertSent(RegistrationSubmitted::class, function (RegistrationSubmitted $mail) {
-            return $mail->hasTo('manager.jerusalem@example.org')
-                && $mail->hasSubject('טופס רישום הנדסאים - ענת וולפמן - חשמל')
+            return $mail->hasTo(config('registration.test_recipient'))
+                && ! $mail->hasTo('anatw@college.org.il')
+                && $mail->hasSubject('[בדיקה] טופס רישום הנדסאים - ענת וולפמן - חשמל')
                 && $mail->hasReplyTo('anat@example.com')
                 && str_starts_with($mail->pdf, '%PDF')
-                && $mail->data['mobile'] === '0505773045';
+                && $mail->data['mobile'] === '0505773045'
+                && $mail->testMode === true;
         });
     }
 
-    public function test_branch_with_several_addresses_gets_one_email_to_all_of_them(): void
+    public function test_in_production_the_email_goes_to_the_branchs_real_addresses(): void
     {
+        // Simulating 'production' here also lifts Laravel's own CSRF bypass
+        // for the test environment, so the middleware is disabled explicitly.
+        $this->withoutMiddleware(PreventRequestForgery::class);
+        $this->app->detectEnvironment(fn () => 'production');
+
         $this->postJson('/register', $this->payload(['branch' => 'haifa', 'major' => 'מכונות']))->assertOk();
 
-        Mail::assertSent(RegistrationSubmitted::class, fn ($mail) => $mail->hasTo('manager.haifa@example.org') && $mail->hasTo('secretary.haifa@example.org'));
+        Mail::assertSent(RegistrationSubmitted::class, function (RegistrationSubmitted $mail) {
+            return $mail->hasTo('yuvalbe@college.org.il')
+                && $mail->hasTo('maayanc2@college.org.il')
+                && ! $mail->hasTo(config('registration.test_recipient'))
+                && $mail->hasSubject('טופס רישום הנדסאים - ענת וולפמן - מכונות')
+                && $mail->testMode === false;
+        });
         Mail::assertSentCount(1);
+    }
+
+    public function test_a_branch_with_no_real_address_on_file_falls_back_to_the_college_info_address(): void
+    {
+        $this->withoutMiddleware(PreventRequestForgery::class);
+        $this->app->detectEnvironment(fn () => 'production');
+
+        $this->postJson('/register', $this->payload(['branch' => 'eilat', 'major' => 'אדריכלות ועיצוב פנים']))->assertOk();
+
+        Mail::assertSent(RegistrationSubmitted::class, fn ($mail) => $mail->hasTo(config('registration.brand.email')));
     }
 
     public function test_rejects_id_with_wrong_check_digit(): void

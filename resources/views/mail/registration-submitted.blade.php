@@ -5,6 +5,11 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" dir="rtl" style="max-width:600px; margin:0 auto; background:#ffffff; border-top:4px solid #1f8dbb;">
   <tr><td style="padding:24px 28px; text-align:right;">
     <img src="{{ $message->embed(resource_path('images/college-logo.png')) }}" alt="המכללה למינהל" width="160" style="display:block; margin:0 0 16px auto;">
+    @if ($testMode ?? false)
+      <div style="margin:0 0 16px; padding:10px 14px; background:#fff3cd; border:1px solid #ffe08a; border-radius:4px; font-size:13px; color:#7a5b00;">
+        מייל בדיקה — סביבה שאינה פרודקשיין. בפרודקשיין הוא היה נשלח לשלוחת {{ $branch['name'] }}: {{ implode(', ', $branch['emails']) }}
+      </div>
+    @endif
     <h1 style="margin:0 0 4px; font-size:20px; color:#1f8dbb;">טופס רישום הנדסאים חדש</h1>
     <p style="margin:0 0 18px; color:#6b7486; font-size:14px;">שלוחת {{ $branch['name'] }} · {{ $submittedAt->format('d.m.Y H:i') }} · אסמכתא {{ $reference }}</p>
 

@@ -8,15 +8,17 @@
 | Branches, majors and recipient emails are supplied by the college.
 | Emails never reach the browser - only branch ids and names do.
 |
-| NOTE (2026-11-18): the PDF card must be emailed to the branch the
-| candidate chose, and a branch can have more than one address - already
-| supported, since 'emails' below is an array and Mail::to() takes it as
-| one recipient list. 'real_branch_emails' holds the college's actual
-| mailboxes (from "רשימת שלוחות + מגמות (1).xlsx"); it is NOT wired to
-| delivery yet. 'branches.*.emails' stays on placeholders until the
-| college's address book is connected - swap it in then.
+| MAIL ROUTING (2026-11-23): delivery is now wired to real SMTP. Outside
+| production, every registration email is redirected to 'test_recipient'
+| instead of the branch - see RegistrationController::store(). Only in
+| production does it go to the branch's own 'emails' below, which
+| are the college's real mailboxes (from "רשימת שלוחות + מגמות (1).xlsx").
+| Eilat had no address on that list, so it falls back to the college's
+| general info address until Irena sends one.
 |
 */
+
+$collegeInfoEmail = 'minhalk@college.org.il';
 
 return [
 
@@ -29,12 +31,17 @@ return [
         // Copied from college.org.il (2026-10-19). The PDF and email use resources/images/college-logo.png.
         'logo' => 'assets/img/college-logo.png',
         'phone' => '*5030',
-        'email' => 'minhalk@college.org.il',
+        'email' => $collegeInfoEmail,
         'address' => 'החשמל 18, תל אביב',
     ],
 
     // Public UI demo: the form never posts to the server.
     'demo' => (bool) env('REGISTRATION_DEMO', false),
+
+    // Outside production (local, testing, staging), every registration email
+    // is redirected here instead of the branch - see recipientsFor() in
+    // RegistrationController. Never reached in automated tests (Mail::fake()).
+    'test_recipient' => env('REGISTRATION_TEST_RECIPIENT', 'avichai+college@finext.co.il'),
 
     // How long the candidate's progress is kept in their browser.
     'storage_ttl_days' => 365,
@@ -47,44 +54,34 @@ return [
     'rate_per_hour' => (int) env('REGISTRATION_RATE_PER_HOUR', 10),
     'duplicate_window_minutes' => 10,
 
-    // Branches from the college's list ("רשימת שלוחות + מגמות.xlsx", 2026-10-21), in its order.
-    // Recipient emails are still placeholders.
+    // Branches from the college's list ("רשימת שלוחות + מגמות (1).xlsx", 2026-11-18), in its order.
     'branches' => [
         'haifa' => [
             'name' => 'חיפה',
-            'emails' => ['manager.haifa@example.org', 'secretary.haifa@example.org'],
+            'emails' => ['yuvalbe@college.org.il', 'yoavsp@college.org.il', 'linoyov@college.org.il', 'limorc@college.org.il', 'etikl@college.org.il', 'britco@college.org.il', 'amitha@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
         ],
         'petah-tikva' => [
             'name' => 'פתח תקווה',
-            'emails' => ['manager.petah-tikva@example.org'],
+            'emails' => ['shiranco@college.org.il', 'sabrinac@college.org.il', 'limorna@college.org.il', 'mayal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
         ],
         'rishon' => [
             'name' => 'ראשון לציון',
-            'emails' => ['manager.rishon@example.org'],
+            'emails' => ['mayal@college.org.il', 'yudita@college.org.il', 'nuritni@college.org.il', 'janetc@college.org.il', 'avivas@college.org.il', 'osnatr@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
         ],
         'ashdod' => [
             'name' => 'אשדוד',
-            'emails' => ['manager.ashdod@example.org'],
+            'emails' => ['dinaer@college.org.il', 'etiar@college.org.il', 'ritash@college.org.il', 'nofarm@college.org.il', 'zinaro@college.org.il', 'levanal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
         ],
         'jerusalem' => [
             'name' => 'ירושלים',
-            'emails' => ['manager.jerusalem@example.org'],
+            'emails' => ['anatw@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
         ],
         'eilat' => [
             'name' => 'אילת',
-            'emails' => ['manager.eilat@example.org'],
+            // No address supplied for Eilat yet - falls back to the college's
+            // general info address so a submission is never silently lost.
+            'emails' => [$collegeInfoEmail],
         ],
-    ],
-
-    // The college's real mailboxes per branch (same xlsx, 2026-11-18). Not used for
-    // delivery yet - see the NOTE above. Eilat has none on the list.
-    'real_branch_emails' => [
-        'haifa' => ['yuvalbe@college.org.il', 'yoavsp@college.org.il', 'linoyov@college.org.il', 'limorc@college.org.il', 'etikl@college.org.il', 'britco@college.org.il', 'amitha@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
-        'petah-tikva' => ['shiranco@college.org.il', 'sabrinac@college.org.il', 'limorna@college.org.il', 'mayal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
-        'rishon' => ['mayal@college.org.il', 'yudita@college.org.il', 'nuritni@college.org.il', 'janetc@college.org.il', 'avivas@college.org.il', 'osnatr@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
-        'ashdod' => ['dinaer@college.org.il', 'etiar@college.org.il', 'ritash@college.org.il', 'nofarm@college.org.il', 'zinaro@college.org.il', 'levanal@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
-        'jerusalem' => ['anatw@college.org.il', 'infodesk25@college.org.il', 'maayanc2@college.org.il'],
-        'eilat' => [],
     ],
 
     // Every branch offers every major (decided 2026-10-22, replacing the per-branch list).

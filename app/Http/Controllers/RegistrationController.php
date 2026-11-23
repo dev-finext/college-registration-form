@@ -51,7 +51,10 @@ class RegistrationController extends Controller
 
         try {
             $submittedAt = now();
-            Mail::to($branch['emails'])->send(new RegistrationSubmitted($data, $card->pdf($data, $submittedAt), $submittedAt));
+            $testMode = ! app()->environment('production');
+            $recipients = $testMode ? [config('registration.test_recipient')] : $branch['emails'];
+
+            Mail::to($recipients)->send(new RegistrationSubmitted($data, $card->pdf($data, $submittedAt), $submittedAt, $testMode));
         } catch (Throwable $e) {
             Cache::forget($lockKey);
             Log::error('Registration email failed', ['branch' => $data['branch'], 'error' => $e->getMessage()]);
