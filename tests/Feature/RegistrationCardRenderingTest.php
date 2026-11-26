@@ -64,7 +64,7 @@ class RegistrationCardRenderingTest extends TestCase
     public function test_an_empty_optional_field_is_shown_as_empty_not_left_blank(): void
     {
         $card = app(RegistrationCardData::class)->for($this->registration(['phone2' => null]), $this->at());
-        $contact = collect($card['sections'])->firstWhere('title', 'דרכי התקשרות ומשפחה');
+        $contact = collect($card['sections'])->firstWhere('title', 'דרכי התקשרות');
         $phone2 = collect($contact['rows'])->flatMap(fn ($row) => $row['fields'])->firstWhere('label', 'טלפון נוסף');
 
         $this->assertNull($phone2['value']);
