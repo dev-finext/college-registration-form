@@ -76,13 +76,11 @@ class RegistrationCardData
                     ])),
                 ],
                 [
-                    'title' => 'דרכי התקשרות ומשפחה',
+                    'title' => 'דרכי התקשרות',
                     'rows' => $this->rows([
                         $this->field('טלפון נייד', $this->phone($d['mobile']), mono: true),
                         $this->field('טלפון נוסף', $this->phone($d['phone2'] ?? null), mono: true),
                         $this->field('דוא"ל', $d['email'], wide: true, mono: true),
-                        $this->field('שם האב', $d['fatherName'] ?? null),
-                        $this->field('שם האם', $d['motherName'] ?? null),
                     ]),
                 ],
                 [

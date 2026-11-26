@@ -91,8 +91,6 @@ class RegistrationRequest extends FormRequest
             'mobile' => ['required', 'regex:/^05\d{8}$/'],
             'phone2' => ['nullable', 'regex:/^0\d{8,9}$/'],
             'email' => ['required', 'email:rfc', 'max:120'],
-            'fatherName' => ['nullable', 'string', 'max:50'],
-            'motherName' => ['nullable', 'string', 'max:50'],
             'serviceType' => ['required', Rule::in($cfg['service_types'])],
             'personalNumber' => ['nullable', 'digits_between:5,9'],
             // Required whenever the fields are shown (any service other than "לא");

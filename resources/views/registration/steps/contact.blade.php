@@ -17,18 +17,6 @@
     </div>
   </div>
 
-  <h3 class="sub-title">משפחה</h3>
-  <div class="grid">
-    <div class="field">
-      <label for="fatherName">שם האב</label>
-      <input id="fatherName" name="fatherName" maxlength="50">
-    </div>
-    <div class="field">
-      <label for="motherName">שם האם</label>
-      <input id="motherName" name="motherName" maxlength="50">
-    </div>
-  </div>
-
   <h3 class="sub-title">שירות צבאי / לאומי</h3>
   <fieldset class="field">
     <legend>שירות בצה"ל / שירות לאומי <span class="req">*</span></legend>

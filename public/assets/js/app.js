@@ -312,8 +312,7 @@
         ...(d.birthCountry && d.birthCountry !== 'ישראל' ? [['תאריך עלייה', heDate(d.aliyahDate)]] : []),
         ['מגדר', d.gender], ['כתובת', [d.street, d.houseNumber, d.city].filter(Boolean).join(' ')], ['מיקוד', d.zip]] },
       { step: 2, title: 'קשר ושירות', rows: [
-        ['נייד', d.mobile], ['טלפון נוסף', d.phone2], ['דוא"ל', d.email],
-        ['שם האב', d.fatherName], ['שם האם', d.motherName], ['שירות', d.serviceType],
+        ['נייד', d.mobile], ['טלפון נוסף', d.phone2], ['דוא"ל', d.email], ['שירות', d.serviceType],
         ...(d.serviceType && d.serviceType !== 'לא' ? [['גיוס', heDate(d.enlistDate)], ['שחרור', heDate(d.releaseDate)]] : []),
         ['מקור מידע', d.infoSource]] },
       { step: 3, title: 'כתב התחייבות', rows: [['אישור תנאים', yes(d.commitmentAccepted)], ['מדיניות פרטיות', yes(d.privacyPolicyAccepted)]] },

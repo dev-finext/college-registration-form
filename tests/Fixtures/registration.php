@@ -24,8 +24,6 @@ return [
     'mobile' => '0505773045',
     'phone2' => null,
     'email' => 'anat@example.com',
-    'fatherName' => 'דוד',
-    'motherName' => 'רחל',
     'serviceType' => 'צה"ל',
     'personalNumber' => '7654321',
     'enlistDate' => '2016-08-01',
